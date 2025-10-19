@@ -77,13 +77,13 @@ bool isSameLayer(const Layer<VoxelType>& layer_A,
       const Block<VoxelType>& block_A = layer_A.getBlockByIndex(index_A);
       const Block<VoxelType>& block_B = layer_B.getBlockByIndex(*it);
       bool is_same_block = isSameBlock(block_A, block_B);
-      LOG_IF(ERROR, !is_same_block)
-          << "Block at index [" << index_A.transpose()
-          << "] in layer_A is not the same as in layer_B";
+      // LOG_IF(ERROR, !is_same_block)
+      //     << "Block at index [" << index_A.transpose()
+      //     << "] in layer_A is not the same as in layer_B";
       is_the_same &= is_same_block;
     } else {
       // LOG(ERROR) << "Block at index [" << index_A.transpose()
-      << "] in layer_A does not exists in layer_B";
+      // << "] in layer_A does not exists in layer_B";
       return false;
     }
   }
@@ -94,13 +94,13 @@ bool isSameLayer(const Layer<VoxelType>& layer_A,
       const Block<VoxelType>& block_B = layer_A.getBlockByIndex(index_B);
       const Block<VoxelType>& block_A = layer_B.getBlockByIndex(*it);
       bool is_same_block = isSameBlock(block_B, block_A);
-      LOG_IF(ERROR, !is_same_block)
-          << "Block at index [" << index_B.transpose()
-          << "] in layer_B is not the same as in layer_A";
+      // LOG_IF(ERROR, !is_same_block)
+      //     << "Block at index [" << index_B.transpose()
+      //     << "] in layer_B is not the same as in layer_A";
       is_the_same &= is_same_block;
     } else {
       // LOG(ERROR) << "Block at index [" << index_B.transpose()
-      << "] in layer_B does not exists in layer_A";
+      // << "] in layer_B does not exists in layer_A";
       return false;
     }
   }
@@ -146,9 +146,10 @@ void centerBlocksOfLayer(Layer<VoxelType>* layer, Point* new_layer_origin) {
   const FloatingPoint block_size = layer->block_size();
   *new_layer_origin = index_centroid.cast<FloatingPoint>() * block_size;
 
-  V  // LOG(3) << "The new origin of the coordinate frame (expressed in the old
-     // "
-      << "coordinate frame) is: " << new_layer_origin->transpose();
+  // V  // LOG(3) << "The new origin of the coordinate frame (expressed in the
+  // old
+  // "
+  // << "coordinate frame) is: " << new_layer_origin->transpose();
 
   // Loop over all blocks and change their spatial indices.
   // The only way to do this is to remove them all, store them in a temporary

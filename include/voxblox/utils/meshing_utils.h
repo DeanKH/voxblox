@@ -15,7 +15,7 @@ bool getSdfIfValid(const VoxelType& voxel, const FloatingPoint min_weight,
 template <>
 inline bool getSdfIfValid(const TsdfVoxel& voxel,
                           const FloatingPoint min_weight, FloatingPoint* sdf) {
-  DCHECK(sdf != nullptr);
+  // DCHECK(sdf != nullptr);
   if (voxel.weight <= min_weight) {
     return false;
   }
@@ -27,7 +27,7 @@ template <>
 inline bool getSdfIfValid(const EsdfVoxel& voxel,
                           const FloatingPoint /*min_weight*/,
                           FloatingPoint* sdf) {
-  DCHECK(sdf != nullptr);
+  // DCHECK(sdf != nullptr);
   if (!voxel.observed) {
     return false;
   }
@@ -42,7 +42,7 @@ bool getColorIfValid(const VoxelType& voxel, const FloatingPoint min_weight,
 template <>
 inline bool getColorIfValid(const TsdfVoxel& voxel,
                             const FloatingPoint min_weight, Color* color) {
-  DCHECK(color != nullptr);
+  // DCHECK(color != nullptr);
   if (voxel.weight <= min_weight) {
     return false;
   }
@@ -53,7 +53,7 @@ inline bool getColorIfValid(const TsdfVoxel& voxel,
 template <>
 inline bool getColorIfValid(const EsdfVoxel& voxel,
                             const FloatingPoint /*min_weight*/, Color* color) {
-  DCHECK(color != nullptr);
+  // DCHECK(color != nullptr);
   if (!voxel.observed) {
     return false;
   }

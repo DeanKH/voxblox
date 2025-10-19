@@ -51,6 +51,6 @@ target_include_directories(
   ${PROJECT_NAME}
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
          $<INSTALL_INTERFACE:include> ${Protobuf_INCLUDE_DIRS}
-         ${EIGEN3_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR}/proto)
+         ${EIGEN3_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
 
 # target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_proto)

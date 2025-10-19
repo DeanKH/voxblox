@@ -42,7 +42,7 @@ class ApproxHashArray {
   }
 
   StoredElement& get(const IndexType& index, size_t* hash) {
-    DCHECK(hash);
+    // DCHECK(hash);
     *hash = hasher_(index);
     return get(*hash);
   }
@@ -102,7 +102,7 @@ class ApproxHashSet {
   }
 
   inline bool isHashCurrentlyPresent(const IndexType& index, size_t* hash) {
-    DCHECK(hash);
+    // DCHECK(hash);
     *hash = hasher_(index);
     return isHashCurrentlyPresent(*hash);
   }
@@ -134,7 +134,7 @@ class ApproxHashSet {
   }
 
   inline bool replaceHash(const IndexType& index, size_t* hash) {
-    DCHECK(hash);
+    // DCHECK(hash);
     *hash = hasher_(index);
     return replaceHash(*hash);
   }

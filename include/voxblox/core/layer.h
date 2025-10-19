@@ -7,8 +7,8 @@
 
 // #include <glog/logging.h>
 
-#include "voxblox/Block.pb.h"
-#include "voxblox/Layer.pb.h"
+#include "proto/voxblox/Block.pb.h"
+#include "proto/voxblox/Layer.pb.h"
 #include "voxblox/core/block.h"
 #include "voxblox/core/block_hash.h"
 #include "voxblox/core/common.h"
@@ -136,11 +136,11 @@ class Layer {
                    voxels_per_side_, voxel_size_,
                    getOriginPointFromGridIndex(index, block_size_)));
 
-    DCHECK(insert_status.second)
-        << "Block already exists when allocating at " << index.transpose();
+    // DCHECK(insert_status.second)
+    // << "Block already exists when allocating at " << index.transpose();
 
-    DCHECK(insert_status.first->second);
-    DCHECK_EQ(insert_status.first->first, index);
+    // DCHECK(insert_status.first->second);
+    // DCHECK_EQ(insert_status.first->first, index);
     return insert_status.first->second;
   }
 
@@ -154,10 +154,10 @@ class Layer {
           block_pair) {
     auto insert_status = block_map_.insert(block_pair);
 
-    DCHECK(insert_status.second) << "Block already exists when inserting at "
-                                 << insert_status.first->first.transpose();
+    // DCHECK(insert_status.second) << "Block already exists when inserting at "
+    // << insert_status.first->first.transpose();
 
-    DCHECK(insert_status.first->second);
+    // DCHECK(insert_status.first->second);
   }
 
   void removeBlock(const BlockIndex& index) { block_map_.erase(index); }

@@ -11,14 +11,14 @@ void serializeDirection(const Eigen::Vector3i& parent_direction,
   // CHECK_EQ(*data, 0u);
 
   // NOTE: these checks will fail until the TODO below is adressed.
-  DCHECK_GE(parent_direction.x(), INT8_MIN);
-  DCHECK_LE(parent_direction.x(), INT8_MAX);
+  // DCHECK_GE(parent_direction.x(), INT8_MIN);
+  // DCHECK_LE(parent_direction.x(), INT8_MAX);
 
-  DCHECK_GE(parent_direction.y(), INT8_MIN);
-  DCHECK_LE(parent_direction.y(), INT8_MAX);
+  // DCHECK_GE(parent_direction.y(), INT8_MIN);
+  // DCHECK_LE(parent_direction.y(), INT8_MAX);
 
-  DCHECK_GE(parent_direction.z(), INT8_MIN);
-  DCHECK_LE(parent_direction.z(), INT8_MAX);
+  // DCHECK_GE(parent_direction.z(), INT8_MIN);
+  // DCHECK_LE(parent_direction.z(), INT8_MAX);
 
   // TODO(helenol, mfehr):
   // Serialization should never change the values, the parent values will either
@@ -49,14 +49,14 @@ Eigen::Vector3i deserializeDirection(const uint32_t data) {
   parent_direction.y() = static_cast<int8_t>((data >> 16) & 0x000000FF);
   parent_direction.z() = static_cast<int8_t>((data >> 8) & 0x000000FF);
 
-  DCHECK_GE(parent_direction.x(), INT8_MIN);
-  DCHECK_LE(parent_direction.x(), INT8_MAX);
+  // DCHECK_GE(parent_direction.x(), INT8_MIN);
+  // DCHECK_LE(parent_direction.x(), INT8_MAX);
 
-  DCHECK_GE(parent_direction.y(), INT8_MIN);
-  DCHECK_LE(parent_direction.y(), INT8_MAX);
+  // DCHECK_GE(parent_direction.y(), INT8_MIN);
+  // DCHECK_LE(parent_direction.y(), INT8_MAX);
 
-  DCHECK_GE(parent_direction.z(), INT8_MIN);
-  DCHECK_LE(parent_direction.z(), INT8_MAX);
+  // DCHECK_GE(parent_direction.z(), INT8_MIN);
+  // DCHECK_LE(parent_direction.z(), INT8_MAX);
 
   return parent_direction;
 }

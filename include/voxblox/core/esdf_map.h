@@ -44,7 +44,7 @@ class EsdfMap {
 
   /// Creates a new EsdfMap that contains this layer.
   explicit EsdfMap(Layer<EsdfVoxel>::Ptr layer)
-      : esdf_layer_(layer), interpolator_(CHECK_NOTNULL(esdf_layer_.get())) {
+      : esdf_layer_(layer), interpolator_(esdf_layer_.get()) {
     block_size_ = layer->block_size();
   }
 

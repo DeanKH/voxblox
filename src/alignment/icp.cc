@@ -78,7 +78,7 @@ bool ICP::getTransformFromMatchedPoints(const PointsMatrix& src,
 void ICP::addNormalizedPointInfo(const Point& point,
                                  const Point& normalized_point_normal,
                                  Vector6* info_vector) {
-  DCHECK(info_vector != nullptr);
+  // DCHECK(info_vector != nullptr);
 
   // add translational point information
   info_vector->head<3>() +=

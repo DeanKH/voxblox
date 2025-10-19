@@ -38,7 +38,7 @@ SortedThreadSafeIndex::SortedThreadSafeIndex(const Pointcloud& points_C)
 
 // returns true if index is valid, false otherwise
 bool ThreadSafeIndex::getNextIndex(size_t* idx) {
-  DCHECK(idx != nullptr);
+  // DCHECK(idx != nullptr);
   size_t sequential_idx = atomic_idx_.fetch_add(1);
 
   if (sequential_idx >= number_of_points_) {
@@ -113,7 +113,7 @@ bool RayCaster::nextRayIndex(GlobalIndex* ray_index) {
     return false;
   }
 
-  DCHECK(ray_index != nullptr);
+  // DCHECK(ray_index != nullptr);
   *ray_index = curr_index_;
 
   int t_min_idx;

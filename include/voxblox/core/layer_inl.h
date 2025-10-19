@@ -13,8 +13,8 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/message_lite.h>
 
-#include "voxblox/Block.pb.h"
-#include "voxblox/Layer.pb.h"
+#include "proto/voxblox/Block.pb.h"
+#include "proto/voxblox/Layer.pb.h"
 #include "voxblox/core/block.h"
 #include "voxblox/core/voxel.h"
 #include "voxblox/utils/protobuf_utils.h"
@@ -26,8 +26,8 @@ Layer<VoxelType>::Layer(const LayerProto& proto)
     : voxel_size_(proto.voxel_size()),
       voxels_per_side_(proto.voxels_per_side()) {
   // CHECK_EQ(getType().compare(proto.type()), 0)
-  << "Incorrect voxel type, proto type: " << proto.type()
-  << " layer type: " << getType();
+  // << "Incorrect voxel type, proto type: " << proto.type()
+  // << " layer type: " << getType();
 
   // Derived config parameter.
   // CHECK_GT(proto.voxel_size(), 0.0);
@@ -44,7 +44,7 @@ void Layer<VoxelType>::getProto(LayerProto* proto) const {
   // CHECK_NOTNULL(proto);
 
   // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-  << "The voxel type of this layer is not serializable!";
+  // << "The voxel type of this layer is not serializable!";
 
   proto->set_voxel_size(voxel_size_);
   proto->set_voxels_per_side(voxels_per_side_);
@@ -92,7 +92,7 @@ bool Layer<VoxelType>::saveSubsetToFile(const std::string& file_path,
                                         bool include_all_blocks,
                                         bool clear_file) const {
   // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-  << "The voxel type of this layer is not serializable!";
+  // << "The voxel type of this layer is not serializable!";
 
   // CHECK(!file_path.empty());
   std::fstream outfile;
@@ -192,7 +192,7 @@ template <typename VoxelType>
 bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
                                          BlockMergingStrategy strategy) {
   // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-  << "The voxel type of this layer is not serializable!";
+  // << "The voxel type of this layer is not serializable!";
 
   if (isCompatible(block_proto)) {
     typename BlockType::Ptr block_ptr(new BlockType(block_proto));
@@ -201,7 +201,7 @@ bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
     switch (strategy) {
       case BlockMergingStrategy::kProhibit:
         // CHECK_EQ(block_map_.count(block_index), 0u)
-        << "Block collision at index: " << block_index;
+        // << "Block collision at index: " << block_index;
         block_map_[block_index] = block_ptr;
         break;
       case BlockMergingStrategy::kReplace:
@@ -220,14 +220,14 @@ bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
       } break;
       default:
         // LOG(FATAL) << "Unknown BlockMergingStrategy: "
-        << static_cast<int>(strategy);
+        // << static_cast<int>(strategy);
         return false;
     }
     // Mark that this block has been updated.
     block_map_[block_index]->updated().set();
   } else {
     // LOG(ERROR)
-    << "The blocks from this protobuf are not compatible with this layer!";
+    // << "The blocks from this protobuf are not compatible with this layer!";
     return false;
   }
   return true;
@@ -243,18 +243,18 @@ bool Layer<VoxelType>::isCompatible(const LayerProto& layer_proto) const {
 
   if (!compatible) {
     // LOG(WARNING)
-    << "Voxel size of the loaded map is: " << layer_proto.voxel_size()
-    << " but the current map is: " << voxel_size_ << " check passed? "
-    << (std::fabs(layer_proto.voxel_size() - voxel_size_) <
-        std::numeric_limits<FloatingPoint>::epsilon())
-    << "\nVPS of the loaded map is: " << layer_proto.voxels_per_side()
-    << " but the current map is: " << voxels_per_side_ << " check passed? "
-    << (layer_proto.voxels_per_side() == voxels_per_side_)
-    << "\nLayer type of the loaded map is: " << getType()
-    << " but the current map is: " << layer_proto.type() << " check passed? "
-    << (getType().compare(layer_proto.type()) == 0)
-    << "\nAre the maps using the same floating-point type? "
-    << (layer_proto.voxel_size() == voxel_size_) << std::endl;
+    // << "Voxel size of the loaded map is: " << layer_proto.voxel_size()
+    // << " but the current map is: " << voxel_size_ << " check passed? "
+    // << (std::fabs(layer_proto.voxel_size() - voxel_size_) <
+    //     std::numeric_limits<FloatingPoint>::epsilon())
+    // << "\nVPS of the loaded map is: " << layer_proto.voxels_per_side()
+    // << " but the current map is: " << voxels_per_side_ << " check passed? "
+    // << (layer_proto.voxels_per_side() == voxels_per_side_)
+    // << "\nLayer type of the loaded map is: " << getType()
+    // << " but the current map is: " << layer_proto.type() << " check passed? "
+    // << (getType().compare(layer_proto.type()) == 0)
+    // << "\nAre the maps using the same floating-point type? "
+    // << (layer_proto.voxel_size() == voxel_size_) << std::endl;
   }
   return compatible;
 }

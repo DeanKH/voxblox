@@ -142,8 +142,9 @@ FloatingPoint evaluateLayersRmse(
           ++evaluation_details.num_non_overlapping_voxels;
           break;
         default:
+          break;
           // LOG(FATAL) << "Unkown voxel evaluation result: "
-          << static_cast<int>(result);
+          // << static_cast<int>(result);
       }
     }
   }
@@ -179,9 +180,10 @@ FloatingPoint evaluateLayersRmse(
     *evaluation_result = evaluation_details;
   }
 
-  V  // LOG(2) << evaluation_details.toString();
+  // V
+  // LOG(2) << evaluation_details.toString();
 
-      return evaluation_details.rmse;
+  return evaluation_details.rmse;
 }
 
 /**

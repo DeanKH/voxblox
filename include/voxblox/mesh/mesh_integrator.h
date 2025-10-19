@@ -91,9 +91,9 @@ class MeshIntegrator {
   MeshIntegrator(const MeshIntegratorConfig& config,
                  Layer<VoxelType>* sdf_layer, MeshLayer* mesh_layer)
       : config_(config),
-        sdf_layer_mutable_(CHECK_NOTNULL(sdf_layer)),
-        sdf_layer_const_(CHECK_NOTNULL(sdf_layer)),
-        mesh_layer_(CHECK_NOTNULL(mesh_layer)) {
+        sdf_layer_mutable_(sdf_layer),
+        sdf_layer_const_(sdf_layer),
+        mesh_layer_(mesh_layer) {
     initFromSdfLayer(*sdf_layer);
 
     cube_index_offsets_ << 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0,
@@ -114,7 +114,7 @@ class MeshIntegrator {
       : config_(config),
         sdf_layer_mutable_(nullptr),
         sdf_layer_const_(&sdf_layer),
-        mesh_layer_(CHECK_NOTNULL(mesh_layer)) {
+        mesh_layer_(mesh_layer) {
     initFromSdfLayer(sdf_layer);
 
     // clang-format off
@@ -132,9 +132,9 @@ class MeshIntegrator {
   /// Generates mesh from the tsdf layer.
   void generateMesh(bool only_mesh_updated_blocks, bool clear_updated_flag) {
     // CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
-    << "If you would like to modify the updated flag in the blocks, please "
-    << "use the constructor that provides a non-const link to the sdf "
-    << "layer!";
+    // << "If you would like to modify the updated flag in the blocks, please "
+    // << "use the constructor that provides a non-const link to the sdf "
+    // << "layer!";
     BlockIndexList all_tsdf_blocks;
     if (only_mesh_updated_blocks) {
       sdf_layer_const_->getAllUpdatedBlocks(Update::kMesh, &all_tsdf_blocks);
@@ -165,11 +165,11 @@ class MeshIntegrator {
   void generateMeshBlocksFunction(const BlockIndexList& all_tsdf_blocks,
                                   bool clear_updated_flag,
                                   ThreadSafeIndex* index_getter) {
-    DCHECK(index_getter != nullptr);
+    // DCHECK(index_getter != nullptr);
     // CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
-    << "If you would like to modify the updated flag in the blocks, please "
-    << "use the constructor that provides a non-const link to the sdf "
-    << "layer!";
+    // << "If you would like to modify the updated flag in the blocks, please "
+    // << "use the constructor that provides a non-const link to the sdf "
+    // << "layer!";
 
     size_t list_idx;
     while (index_getter->getNextIndex(&list_idx)) {
@@ -185,8 +185,8 @@ class MeshIntegrator {
 
   void extractBlockMesh(typename Block<VoxelType>::ConstPtr block,
                         Mesh::Ptr mesh) {
-    DCHECK(block != nullptr);
-    DCHECK(mesh != nullptr);
+    // DCHECK(block != nullptr);
+    // DCHECK(mesh != nullptr);
 
     IndexElement vps = block->voxels_per_side();
     VertexIndex next_mesh_index = 0;
@@ -248,7 +248,7 @@ class MeshIntegrator {
 
     if (!block) {
       // LOG(ERROR) << "Trying to mesh a non-existent block at index: "
-      << block_index.transpose();
+      // << block_index.transpose();
       return;
     }
     extractBlockMesh(block, mesh);
@@ -263,8 +263,8 @@ class MeshIntegrator {
   void extractMeshInsideBlock(const Block<VoxelType>& block,
                               const VoxelIndex& index, const Point& coords,
                               VertexIndex* next_mesh_index, Mesh* mesh) {
-    DCHECK(next_mesh_index != nullptr);
-    DCHECK(mesh != nullptr);
+    // DCHECK(next_mesh_index != nullptr);
+    // DCHECK(mesh != nullptr);
 
     Eigen::Matrix<FloatingPoint, 3, 8> cube_coord_offsets =
         cube_index_offsets_.cast<FloatingPoint>() * voxel_size_;
@@ -292,7 +292,7 @@ class MeshIntegrator {
   void extractMeshOnBorder(const Block<VoxelType>& block,
                            const VoxelIndex& index, const Point& coords,
                            VertexIndex* next_mesh_index, Mesh* mesh) {
-    DCHECK(mesh != nullptr);
+    // DCHECK(mesh != nullptr);
 
     Eigen::Matrix<FloatingPoint, 3, 8> cube_coord_offsets =
         cube_index_offsets_.cast<FloatingPoint>() * voxel_size_;
@@ -360,7 +360,7 @@ class MeshIntegrator {
   }
 
   void updateMeshColor(const Block<VoxelType>& block, Mesh* mesh) {
-    DCHECK(mesh != nullptr);
+    // DCHECK(mesh != nullptr);
 
     mesh->colors.clear();
     mesh->colors.resize(mesh->indices.size());

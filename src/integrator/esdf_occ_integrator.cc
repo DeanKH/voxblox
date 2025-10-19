@@ -24,7 +24,7 @@ void EsdfOccIntegrator::updateFromOccLayerBatch() {
 }
 
 void EsdfOccIntegrator::updateFromOccBlocks(const BlockIndexList& occ_blocks) {
-  DCHECK_EQ(occ_layer_->voxels_per_side(), esdf_layer_->voxels_per_side());
+  // DCHECK_EQ(occ_layer_->voxels_per_side(), esdf_layer_->voxels_per_side());
   timing::Timer esdf_timer("esdf_occ");
 
   // Get a specific list of voxels in the TSDF layer, and propagate out from
@@ -34,8 +34,8 @@ void EsdfOccIntegrator::updateFromOccBlocks(const BlockIndexList& occ_blocks) {
   size_t num_raise = 0u;
   size_t num_new = 0u;
   timing::Timer propagate_timer("esdf_occ/propagate_tsdf");
-  V  // LOG(3) << "[ESDF update]: Propagating " << occ_blocks.size()
-      << " updated blocks from the TSDF.";
+  // V  // LOG(3) << "[ESDF update]: Propagating " << occ_blocks.size()
+  // << " updated blocks from the TSDF.";
   for (const BlockIndex& block_index : occ_blocks) {
     const Block<OccupancyVoxel>& occ_block =
         occ_layer_->getBlockByIndex(block_index);
@@ -85,9 +85,9 @@ void EsdfOccIntegrator::updateFromOccBlocks(const BlockIndexList& occ_blocks) {
     }
   }
   propagate_timer.Stop();
-  V  // LOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " <<
-     // num_raise
-      << " New: " << num_new;
+  // V  // LOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " <<
+  // num_raise
+  // << " New: " << num_new;
 
   timing::Timer raise_timer("esdf_occ/raise_esdf");
   // Process the open set now.
@@ -147,7 +147,7 @@ void EsdfOccIntegrator::processOpenSet() {
         continue;
       }
       // CHECK(neighbor_block->isValidVoxelIndex(neighbor_voxel_index))
-      << "Neigbor voxel index: " << neighbor_voxel_index.transpose();
+      // << "Neigbor voxel index: " << neighbor_voxel_index.transpose();
 
       EsdfVoxel& neighbor_voxel =
           neighbor_block->getVoxelByVoxelIndex(neighbor_voxel_index);
@@ -189,7 +189,7 @@ void EsdfOccIntegrator::processOpenSet() {
     esdf_voxel.in_queue = false;
   }
 
-  V  // LOG(3) << "[ESDF update]: made " << num_updates << " voxel updates.";
+  // V  // LOG(3) << "[ESDF update]: made " << num_updates << " voxel updates.";
 }
 
 // Uses 26-connectivity and quasi-Euclidean distances.
@@ -270,8 +270,8 @@ void EsdfOccIntegrator::getNeighbor(const BlockIndex& block_index,
                                     const Eigen::Vector3i& direction,
                                     BlockIndex* neighbor_block_index,
                                     VoxelIndex* neighbor_voxel_index) const {
-  DCHECK(neighbor_block_index != NULL);
-  DCHECK(neighbor_voxel_index != NULL);
+  // DCHECK(neighbor_block_index != NULL);
+  // DCHECK(neighbor_voxel_index != NULL);
 
   *neighbor_block_index = block_index;
   *neighbor_voxel_index = voxel_index + direction;

@@ -18,7 +18,7 @@ void IntensityIntegrator::addIntensityBearingVectors(
   timing::Timer intensity_timer("intensity/integrate");
 
   // CHECK_EQ(bearing_vectors.size(), intensities.size())
-  << "Intensity and bearing vector size does not match!";
+  // << "Intensity and bearing vector size does not match!";
   const FloatingPoint voxel_size = tsdf_layer_.voxel_size();
 
   for (size_t i = 0; i < bearing_vectors.size(); ++i) {

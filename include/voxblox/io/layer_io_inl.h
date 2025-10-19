@@ -4,8 +4,8 @@
 #include <fstream>
 #include <string>
 
-#include "voxblox/Block.pb.h"
-#include "voxblox/Layer.pb.h"
+#include "proto/voxblox/Block.pb.h"
+#include "proto/voxblox/Layer.pb.h"
 #include "voxblox/utils/protobuf_utils.h"
 
 namespace voxblox {
@@ -60,8 +60,8 @@ bool LoadBlocksFromFile(
       layer_found = true;
     } else if (!multiple_layer_support) {
       // LOG(ERROR)
-      << "The layer information read from file is not compatible with "
-         "the current layer!";
+      // << "The layer information read from file is not compatible with "
+      //    "the current layer!";
       return false;
     } else {
       // Figure out how much offset to jump forward by. This is the number of
@@ -74,7 +74,7 @@ bool LoadBlocksFromFile(
         if (!utils::readProtoMsgFromStream(&proto_file, &block_proto,
                                            &tmp_byte_offset)) {
           // LOG(ERROR) << "Could not read block protobuf message number "
-          << block_idx;
+          // << block_idx;
           return false;
         }
       }
@@ -116,7 +116,7 @@ bool LoadBlocksFromStream(
     if (!utils::readProtoMsgFromStream(proto_file_ptr, &block_proto,
                                        tmp_byte_offset_ptr)) {
       // LOG(ERROR) << "Could not read block protobuf message number "
-      << block_idx;
+      // << block_idx;
       return false;
     }
 
@@ -174,7 +174,7 @@ bool LoadLayer(const std::string& file_path, const bool multiple_layer_support,
     if ((layer_proto.voxel_size() <= 0.0f) ||
         (layer_proto.voxels_per_side() == 0u)) {
       // LOG(ERROR)
-      << "Invalid parameter in layer protobuf message. Check the format.";
+      // << "Invalid parameter in layer protobuf message. Check the format.";
       return false;
     }
 
@@ -182,8 +182,8 @@ bool LoadLayer(const std::string& file_path, const bool multiple_layer_support,
       layer_found = true;
     } else if (!multiple_layer_support) {
       // LOG(ERROR)
-      << "The layer information read from file is not compatible with "
-         "the current layer!";
+      // << "The layer information read from file is not compatible with "
+      //  "the current layer!";
       return false;
     } else {
       // Figure out how much offset to jump forward by. This is the number of
@@ -196,7 +196,7 @@ bool LoadLayer(const std::string& file_path, const bool multiple_layer_support,
         if (!utils::readProtoMsgFromStream(&proto_file, &block_proto,
                                            &tmp_byte_offset)) {
           // LOG(ERROR) << "Could not read block protobuf message number "
-          << block_idx;
+          // << block_idx;
           return false;
         }
       }

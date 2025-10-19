@@ -86,8 +86,8 @@ void EsdfIntegrator::addNewRobotPosition(const Point& position) {
     }
   }
 
-  V  // LOG(3) << "Changed " << updated_blocks_.size()
-      << " blocks from unknown to free or occupied near the robot.";
+  // V  // LOG(3) << "Changed " << updated_blocks_.size()
+  // << " blocks from unknown to free or occupied near the robot.";
   clear_timer.Stop();
 }
 
@@ -131,8 +131,8 @@ void EsdfIntegrator::updateFromTsdfBlocks(const BlockIndexList& tsdf_blocks,
   size_t num_raise = 0u;
   size_t num_new = 0u;
   timing::Timer propagate_timer("esdf/propagate_tsdf");
-  V  // LOG(3) << "[ESDF update]: Propagating " << tsdf_blocks.size()
-      << " updated blocks from the TSDF.";
+  // V  // LOG(3) << "[ESDF update]: Propagating " << tsdf_blocks.size()
+  // << " updated blocks from the TSDF.";
   for (const BlockIndex& block_index : tsdf_blocks) {
     Block<TsdfVoxel>::ConstPtr tsdf_block =
         tsdf_layer_->getBlockPtrByIndex(block_index);
@@ -287,9 +287,9 @@ void EsdfIntegrator::updateFromTsdfBlocks(const BlockIndexList& tsdf_blocks,
   }
 
   propagate_timer.Stop();
-  V  // LOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " <<
-     // num_raise
-      << " New: " << num_new;
+  // V  // LOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " <<
+  // num_raise
+  // << " New: " << num_new;
 
   timing::Timer raise_timer("esdf/raise_esdf");
   processRaiseSet();
@@ -366,7 +366,7 @@ void EsdfIntegrator::processRaiseSet() {
     }
     num_updates++;
   }
-  V  // LOG(3) << "[ESDF update]: raised " << num_updates << " voxels.";
+  // V  // LOG(3) << "[ESDF update]: raised " << num_updates << " voxels.";
 }
 
 void EsdfIntegrator::processOpenSet() {
@@ -491,9 +491,9 @@ void EsdfIntegrator::processOpenSet() {
     }
   }
 
-  V  // LOG(3) << "[ESDF update]: made " << num_updates
-      << " voxel updates, of which outside: " << num_outside
-      << " inside: " << num_inside << " flipped: " << num_flipped;
+  // V  // LOG(3) << "[ESDF update]: made " << num_updates
+  // << " voxel updates, of which outside: " << num_outside
+  // << " inside: " << num_inside << " flipped: " << num_flipped;
 }
 
 bool EsdfIntegrator::updateVoxelFromNeighbors(const GlobalIndex& global_index) {

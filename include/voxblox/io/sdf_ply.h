@@ -200,7 +200,8 @@ bool outputLayerAsPly(const Layer<VoxelType>& layer,
 
     default:
       // LOG(FATAL) << "Unknown layer to ply output type: "
-      << static_cast<int>(type);
+      // << static_cast<int>(type);
+      break;
   }
   return false;
 }

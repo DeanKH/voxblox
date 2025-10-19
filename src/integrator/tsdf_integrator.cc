@@ -39,7 +39,7 @@ TsdfIntegratorBase::Ptr TsdfIntegratorFactory::create(
       break;
     default:
       // LOG(FATAL) << "Unknown TSDF integrator type: "
-      << static_cast<int>(integrator_type);
+      // << static_cast<int>(integrator_type);
       break;
   }
   return TsdfIntegratorBase::Ptr();
@@ -91,8 +91,8 @@ void TsdfIntegratorBase::setLayer(Layer<TsdfVoxel>* layer) {
 TsdfVoxel* TsdfIntegratorBase::allocateStorageAndGetVoxelPtr(
     const GlobalIndex& global_voxel_idx, Block<TsdfVoxel>::Ptr* last_block,
     BlockIndex* last_block_idx) {
-  DCHECK(last_block != nullptr);
-  DCHECK(last_block_idx != nullptr);
+  // DCHECK(last_block != nullptr);
+  // DCHECK(last_block_idx != nullptr);
 
   const BlockIndex block_idx =
       getBlockIndexFromGlobalVoxelIndex(global_voxel_idx, voxels_per_side_inv_);
@@ -118,8 +118,9 @@ TsdfVoxel* TsdfIntegratorBase::allocateStorageAndGetVoxelPtr(
                          voxels_per_side_, voxel_size_,
                          getOriginPointFromGridIndex(block_idx, block_size_)));
 
-      DCHECK(insert_status.second) << "Block already exists when allocating at "
-                                   << block_idx.transpose();
+      // DCHECK(insert_status.second) << "Block already exists when allocating
+      // at "
+      // << block_idx.transpose();
 
       *last_block = insert_status.first->second;
     }
@@ -152,7 +153,7 @@ void TsdfIntegratorBase::updateTsdfVoxel(const Point& origin,
                                          const GlobalIndex& global_voxel_idx,
                                          const Color& color, const float weight,
                                          TsdfVoxel* tsdf_voxel) {
-  DCHECK(tsdf_voxel != nullptr);
+  // DCHECK(tsdf_voxel != nullptr);
 
   const Point voxel_center =
       getCenterPointFromGridIndex(global_voxel_idx, voxel_size_);
@@ -271,7 +272,7 @@ void SimpleTsdfIntegrator::integrateFunction(const Transformation& T_G_C,
                                              const Colors& colors,
                                              const bool freespace_points,
                                              ThreadSafeIndex* index_getter) {
-  DCHECK(index_getter != nullptr);
+  // DCHECK(index_getter != nullptr);
 
   size_t point_idx;
   while (index_getter->getNextIndex(&point_idx)) {
@@ -342,8 +343,8 @@ void MergedTsdfIntegrator::bundleRays(
     const bool freespace_points, ThreadSafeIndex* index_getter,
     LongIndexHashMapType<AlignedVector<size_t>>::type* voxel_map,
     LongIndexHashMapType<AlignedVector<size_t>>::type* clear_map) {
-  DCHECK(voxel_map != nullptr);
-  DCHECK(clear_map != nullptr);
+  // DCHECK(voxel_map != nullptr);
+  // DCHECK(clear_map != nullptr);
 
   size_t point_idx;
   while (index_getter->getNextIndex(&point_idx)) {
@@ -365,9 +366,9 @@ void MergedTsdfIntegrator::bundleRays(
     }
   }
 
-  V  // LOG(3) << "Went from " << points_C.size() << " points to "
-      << voxel_map->size() << " raycasts  and " << clear_map->size()
-      << " clear rays.";
+  // V  // LOG(3) << "Went from " << points_C.size() << " points to "
+  // << voxel_map->size() << " raycasts  and " << clear_map->size()
+  // << " clear rays.";
 }
 
 void MergedTsdfIntegrator::integrateVoxel(
@@ -490,7 +491,7 @@ void FastTsdfIntegrator::integrateFunction(const Transformation& T_G_C,
                                            const Colors& colors,
                                            const bool freespace_points,
                                            ThreadSafeIndex* index_getter) {
-  DCHECK(index_getter != nullptr);
+  // DCHECK(index_getter != nullptr);
 
   size_t point_idx;
   while (index_getter->getNextIndex(&point_idx) &&

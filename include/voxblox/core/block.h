@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-#include "voxblox/Block.pb.h"
+#include "proto/voxblox/Block.pb.h"
 #include "voxblox/core/common.h"
 
 namespace voxblox {
@@ -137,7 +137,7 @@ class Block {
   }
 
   inline VoxelType& getVoxelByLinearIndex(size_t index) {
-    DCHECK_LT(index, num_voxels_);
+    // DCHECK_LT(index, num_voxels_);
     return voxels_[index];
   }
 

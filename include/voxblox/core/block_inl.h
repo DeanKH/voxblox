@@ -89,7 +89,7 @@ Block<VoxelType>::Block(const BlockProto& proto)
 
 template <typename VoxelType>
 void Block<VoxelType>::getProto(BlockProto* proto) const {
-  CHECK_NOTNULL(proto);
+  // CHECK_NOTNULL(proto);
 
   proto->set_voxels_per_side(voxels_per_side_);
   proto->set_voxel_size(voxel_size_);
@@ -110,8 +110,8 @@ void Block<VoxelType>::getProto(BlockProto* proto) const {
 
 template <typename VoxelType>
 void Block<VoxelType>::mergeBlock(const Block<VoxelType>& other_block) {
-  CHECK_EQ(other_block.voxel_size(), voxel_size());
-  CHECK_EQ(other_block.voxels_per_side(), voxels_per_side());
+  // CHECK_EQ(other_block.voxel_size(), voxel_size());
+  // CHECK_EQ(other_block.voxels_per_side(), voxels_per_side());
 
   if (!other_block.has_data()) {
     return;

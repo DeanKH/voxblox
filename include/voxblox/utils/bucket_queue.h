@@ -5,7 +5,7 @@
 #include <queue>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 
@@ -39,7 +39,7 @@ class BucketQueue {
   }
 
   void push(const T& key, double value) {
-    CHECK_NE(num_buckets_, 0);
+    // CHECK_NE(num_buckets_, 0);
     if (value > max_val_) {
       value = max_val_;
     }
@@ -70,8 +70,8 @@ class BucketQueue {
   }
 
   T front() {
-    CHECK_NE(num_buckets_, 0);
-    CHECK(!empty());
+    // CHECK_NE(num_buckets_, 0);
+    // CHECK(!empty());
     while (buckets_[last_bucket_index_].empty() &&
            last_bucket_index_ < num_buckets_) {
       last_bucket_index_++;

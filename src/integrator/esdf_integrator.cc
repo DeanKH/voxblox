@@ -8,14 +8,14 @@ EsdfIntegrator::EsdfIntegrator(const Config& config,
                                Layer<TsdfVoxel>* tsdf_layer,
                                Layer<EsdfVoxel>* esdf_layer)
     : config_(config), tsdf_layer_(tsdf_layer), esdf_layer_(esdf_layer) {
-  CHECK(tsdf_layer_);
-  CHECK(esdf_layer_);
+  // CHECK(tsdf_layer_);
+  // CHECK(esdf_layer_);
 
   voxels_per_side_ = esdf_layer_->voxels_per_side();
   voxel_size_ = esdf_layer_->voxel_size();
 
-  CHECK_EQ(esdf_layer_->voxels_per_side(), tsdf_layer_->voxels_per_side());
-  CHECK_NEAR(esdf_layer_->voxel_size(), tsdf_layer_->voxel_size(), 1e-6);
+  // CHECK_EQ(esdf_layer_->voxels_per_side(), tsdf_layer_->voxels_per_side());
+  // CHECK_NEAR(esdf_layer_->voxel_size(), tsdf_layer_->voxel_size(), 1e-6);
 
   open_.setNumBuckets(config_.num_buckets, config_.max_distance_m);
 }
@@ -86,8 +86,8 @@ void EsdfIntegrator::addNewRobotPosition(const Point& position) {
     }
   }
 
-  VLOG(3) << "Changed " << updated_blocks_.size()
-          << " blocks from unknown to free or occupied near the robot.";
+  V  // LOG(3) << "Changed " << updated_blocks_.size()
+      << " blocks from unknown to free or occupied near the robot.";
   clear_timer.Stop();
 }
 
@@ -123,7 +123,7 @@ void EsdfIntegrator::updateFromTsdfLayer(bool clear_updated_flag) {
 
 void EsdfIntegrator::updateFromTsdfBlocks(const BlockIndexList& tsdf_blocks,
                                           bool incremental) {
-  CHECK_EQ(tsdf_layer_->voxels_per_side(), esdf_layer_->voxels_per_side());
+  // CHECK_EQ(tsdf_layer_->voxels_per_side(), esdf_layer_->voxels_per_side());
   timing::Timer esdf_timer("esdf");
 
   // Go through all blocks in TSDF and copy their values for relevant voxels.
@@ -131,8 +131,8 @@ void EsdfIntegrator::updateFromTsdfBlocks(const BlockIndexList& tsdf_blocks,
   size_t num_raise = 0u;
   size_t num_new = 0u;
   timing::Timer propagate_timer("esdf/propagate_tsdf");
-  VLOG(3) << "[ESDF update]: Propagating " << tsdf_blocks.size()
-          << " updated blocks from the TSDF.";
+  V  // LOG(3) << "[ESDF update]: Propagating " << tsdf_blocks.size()
+      << " updated blocks from the TSDF.";
   for (const BlockIndex& block_index : tsdf_blocks) {
     Block<TsdfVoxel>::ConstPtr tsdf_block =
         tsdf_layer_->getBlockPtrByIndex(block_index);
@@ -287,8 +287,9 @@ void EsdfIntegrator::updateFromTsdfBlocks(const BlockIndexList& tsdf_blocks,
   }
 
   propagate_timer.Stop();
-  VLOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " << num_raise
-          << " New: " << num_new;
+  V  // LOG(3) << "[ESDF update]: Lower: " << num_lower << " Raise: " <<
+     // num_raise
+      << " New: " << num_new;
 
   timing::Timer raise_timer("esdf/raise_esdf");
   processRaiseSet();
@@ -316,7 +317,7 @@ void EsdfIntegrator::processRaiseSet() {
     raise_.pop();
 
     EsdfVoxel* voxel = esdf_layer_->getVoxelPtrByGlobalIndex(global_index);
-    CHECK_NOTNULL(voxel);
+    // CHECK_NOTNULL(voxel);
 
     // Get the global indices of neighbors.
     Neighborhood<>::getFromGlobalIndex(global_index, &neighbor_indices);
@@ -365,7 +366,7 @@ void EsdfIntegrator::processRaiseSet() {
     }
     num_updates++;
   }
-  VLOG(3) << "[ESDF update]: raised " << num_updates << " voxels.";
+  V  // LOG(3) << "[ESDF update]: raised " << num_updates << " voxels.";
 }
 
 void EsdfIntegrator::processOpenSet() {
@@ -380,7 +381,7 @@ void EsdfIntegrator::processOpenSet() {
     open_.pop();
 
     EsdfVoxel* voxel = esdf_layer_->getVoxelPtrByGlobalIndex(global_index);
-    CHECK_NOTNULL(voxel);
+    // CHECK_NOTNULL(voxel);
     voxel->in_queue = false;
 
     // Skip voxels that are unobserved or outside the ranges we care about.
@@ -490,14 +491,14 @@ void EsdfIntegrator::processOpenSet() {
     }
   }
 
-  VLOG(3) << "[ESDF update]: made " << num_updates
-          << " voxel updates, of which outside: " << num_outside
-          << " inside: " << num_inside << " flipped: " << num_flipped;
+  V  // LOG(3) << "[ESDF update]: made " << num_updates
+      << " voxel updates, of which outside: " << num_outside
+      << " inside: " << num_inside << " flipped: " << num_flipped;
 }
 
 bool EsdfIntegrator::updateVoxelFromNeighbors(const GlobalIndex& global_index) {
   EsdfVoxel* voxel = esdf_layer_->getVoxelPtrByGlobalIndex(global_index);
-  CHECK_NOTNULL(voxel);
+  // CHECK_NOTNULL(voxel);
   // Get the global indices of neighbors.
   Neighborhood<>::IndexMatrix neighbor_indices;
   Neighborhood<>::getFromGlobalIndex(global_index, &neighbor_indices);

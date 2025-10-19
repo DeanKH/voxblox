@@ -30,7 +30,7 @@
 #include <thread>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <Eigen/Core>
 
 #include "voxblox/core/layer.h"
@@ -100,7 +100,7 @@ class MeshIntegrator {
         0, 0, 1, 1, 1, 1;
 
     if (config_.integrator_threads == 0) {
-      LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
+      // LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
       config_.integrator_threads = 1;
     }
   }
@@ -124,17 +124,17 @@ class MeshIntegrator {
     // clang-format on
 
     if (config_.integrator_threads == 0) {
-      LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
+      // LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
       config_.integrator_threads = 1;
     }
   }
 
   /// Generates mesh from the tsdf layer.
   void generateMesh(bool only_mesh_updated_blocks, bool clear_updated_flag) {
-    CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
-        << "If you would like to modify the updated flag in the blocks, please "
-        << "use the constructor that provides a non-const link to the sdf "
-        << "layer!";
+    // CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
+    << "If you would like to modify the updated flag in the blocks, please "
+    << "use the constructor that provides a non-const link to the sdf "
+    << "layer!";
     BlockIndexList all_tsdf_blocks;
     if (only_mesh_updated_blocks) {
       sdf_layer_const_->getAllUpdatedBlocks(Update::kMesh, &all_tsdf_blocks);
@@ -166,10 +166,10 @@ class MeshIntegrator {
                                   bool clear_updated_flag,
                                   ThreadSafeIndex* index_getter) {
     DCHECK(index_getter != nullptr);
-    CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
-        << "If you would like to modify the updated flag in the blocks, please "
-        << "use the constructor that provides a non-const link to the sdf "
-        << "layer!";
+    // CHECK(!clear_updated_flag || (sdf_layer_mutable_ != nullptr))
+    << "If you would like to modify the updated flag in the blocks, please "
+    << "use the constructor that provides a non-const link to the sdf "
+    << "layer!";
 
     size_t list_idx;
     while (index_getter->getNextIndex(&list_idx)) {
@@ -247,8 +247,8 @@ class MeshIntegrator {
         sdf_layer_const_->getBlockPtrByIndex(block_index);
 
     if (!block) {
-      LOG(ERROR) << "Trying to mesh a non-existent block at index: "
-                 << block_index.transpose();
+      // LOG(ERROR) << "Trying to mesh a non-existent block at index: "
+      << block_index.transpose();
       return;
     }
     extractBlockMesh(block, mesh);
@@ -336,7 +336,7 @@ class MeshIntegrator {
           const Block<VoxelType>& neighbor_block =
               sdf_layer_const_->getBlockByIndex(neighbor_index);
 
-          CHECK(neighbor_block.isValidVoxelIndex(corner_index));
+          // CHECK(neighbor_block.isValidVoxelIndex(corner_index));
           const VoxelType& voxel =
               neighbor_block.getVoxelByVoxelIndex(corner_index);
 

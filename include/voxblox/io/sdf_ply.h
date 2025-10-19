@@ -72,8 +72,8 @@ bool convertVoxelGridToPointCloud(const Layer<VoxelType>& layer,
                                   const float sdf_color_range,
                                   const float sdf_max_value,
                                   voxblox::Mesh* point_cloud) {
-  CHECK_NOTNULL(point_cloud);
-  CHECK_GT(sdf_color_range, 0.0f);
+  // CHECK_NOTNULL(point_cloud);
+  // CHECK_GT(sdf_color_range, 0.0f);
 
   BlockIndexList blocks;
   layer.getAllAllocatedBlocks(&blocks);
@@ -128,7 +128,7 @@ bool convertLayerToMesh(
     const Layer<VoxelType>& layer, const MeshIntegratorConfig& mesh_config,
     voxblox::Mesh* mesh, const bool connected_mesh = true,
     const FloatingPoint vertex_proximity_threshold = 1e-10) {
-  CHECK_NOTNULL(mesh);
+  // CHECK_NOTNULL(mesh);
 
   MeshLayer mesh_layer(layer.block_size());
   MeshIntegrator<VoxelType> mesh_integrator(mesh_config, layer, &mesh_layer);
@@ -168,7 +168,7 @@ bool outputLayerAsPly(const Layer<VoxelType>& layer,
                       const std::string& filename, PlyOutputTypes type,
                       const float sdf_color_range = 0.3f,
                       const float max_sdf_value_to_output = 0.3f) {
-  CHECK(!filename.empty());
+  // CHECK(!filename.empty());
   switch (type) {
     case PlyOutputTypes::kSdfColoredDistanceField: {
       voxblox::Mesh point_cloud;
@@ -199,8 +199,8 @@ bool outputLayerAsPly(const Layer<VoxelType>& layer,
     }
 
     default:
-      LOG(FATAL) << "Unknown layer to ply output type: "
-                 << static_cast<int>(type);
+      // LOG(FATAL) << "Unknown layer to ply output type: "
+      << static_cast<int>(type);
   }
   return false;
 }

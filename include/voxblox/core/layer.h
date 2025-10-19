@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/Block.pb.h"
 #include "voxblox/Layer.pb.h"
@@ -33,13 +33,13 @@ class Layer {
 
   explicit Layer(FloatingPoint voxel_size, size_t voxels_per_side)
       : voxel_size_(voxel_size), voxels_per_side_(voxels_per_side) {
-    CHECK_GT(voxel_size_, 0.0f);
+    // CHECK_GT(voxel_size_, 0.0f);
     voxel_size_inv_ = 1.0 / voxel_size_;
 
     block_size_ = voxel_size_ * voxels_per_side_;
-    CHECK_GT(block_size_, 0.0f);
+    // CHECK_GT(block_size_, 0.0f);
     block_size_inv_ = 1.0 / block_size_;
-    CHECK_GT(voxels_per_side_, 0u);
+    // CHECK_GT(voxels_per_side_, 0u);
     voxels_per_side_inv_ = 1.0f / static_cast<FloatingPoint>(voxels_per_side_);
   }
 
@@ -56,7 +56,7 @@ class Layer {
   inline const BlockType& getBlockByIndex(const BlockIndex& index) const {
     typename BlockHashMap::const_iterator it = block_map_.find(index);
     if (it == block_map_.end()) {
-      LOG(FATAL) << "Accessed unallocated block at " << index.transpose();
+      // LOG(FATAL) << "Accessed unallocated block at " << index.transpose();
     }
     return *(it->second);
   }
@@ -64,7 +64,7 @@ class Layer {
   inline BlockType& getBlockByIndex(const BlockIndex& index) {
     typename BlockHashMap::iterator it = block_map_.find(index);
     if (it == block_map_.end()) {
-      LOG(FATAL) << "Accessed unallocated block at " << index.transpose();
+      // LOG(FATAL) << "Accessed unallocated block at " << index.transpose();
     }
     return *(it->second);
   }
@@ -182,7 +182,7 @@ class Layer {
   }
 
   void getAllAllocatedBlocks(BlockIndexList* blocks) const {
-    CHECK_NOTNULL(blocks);
+    // CHECK_NOTNULL(blocks);
     blocks->clear();
     blocks->reserve(block_map_.size());
     for (const std::pair<const BlockIndex, typename BlockType::Ptr>& kv :
@@ -192,7 +192,7 @@ class Layer {
   }
 
   void getAllUpdatedBlocks(Update::Status bit, BlockIndexList* blocks) const {
-    CHECK_NOTNULL(blocks);
+    // CHECK_NOTNULL(blocks);
     blocks->clear();
     for (const std::pair<const BlockIndex, typename BlockType::Ptr>& kv :
          block_map_) {

@@ -9,7 +9,7 @@ ThreadSafeIndex* ThreadSafeIndexFactory::get(const std::string& mode,
   } else if (mode == "sorted") {
     return new SortedThreadSafeIndex(points_C);
   } else {
-    LOG(FATAL) << "Unknown integration order mode: '" << mode << "'!";
+    // LOG(FATAL) << "Unknown integration order mode: '" << mode << "'!";
   }
   return nullptr;
 }

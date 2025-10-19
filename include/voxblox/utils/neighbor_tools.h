@@ -45,7 +45,7 @@ class Neighborhood : public NeighborhoodLookupTables {
   /// Get the global index of all (6, 18, or 26) neighbors of the input index.
   static void getFromGlobalIndex(const GlobalIndex& global_index,
                                  IndexMatrix* neighbors) {
-    CHECK_NOTNULL(neighbors);
+    // CHECK_NOTNULL(neighbors);
     for (unsigned int i = 0u; i < kConnectivity; ++i) {
       neighbors->col(i) = global_index + kLongOffsets.col(i);
     }
@@ -61,9 +61,9 @@ class Neighborhood : public NeighborhoodLookupTables {
       const BlockIndex& block_index, const VoxelIndex& voxel_index,
       const SignedIndex& direction, const size_t voxels_per_side,
       BlockIndex* neighbor_block_index, VoxelIndex* neighbor_voxel_index) {
-    CHECK_GT(voxels_per_side, 0u);
-    CHECK_NOTNULL(neighbor_block_index);
-    CHECK_NOTNULL(neighbor_voxel_index);
+    // CHECK_GT(voxels_per_side, 0u);
+    // CHECK_NOTNULL(neighbor_block_index);
+    // CHECK_NOTNULL(neighbor_voxel_index);
 
     *neighbor_block_index = block_index;
     *neighbor_voxel_index = voxel_index + direction;
@@ -90,7 +90,7 @@ class Neighborhood : public NeighborhoodLookupTables {
   static void getFromBlockAndVoxelIndex(
       const BlockIndex& block_index, const VoxelIndex& voxel_index,
       const size_t voxels_per_side, AlignedVector<VoxelKey>* neighbors_ptr) {
-    CHECK_NOTNULL(neighbors_ptr)->resize(kConnectivity);
+    // CHECK_NOTNULL(neighbors_ptr)->resize(kConnectivity);
 
     AlignedVector<VoxelKey>& neighbors = *neighbors_ptr;
     for (unsigned int i = 0u; i < kConnectivity; ++i) {
@@ -107,7 +107,7 @@ class Neighborhood : public NeighborhoodLookupTables {
                                             const BlockIndex& end_block_index,
                                             const VoxelIndex& end_voxel_index,
                                             const size_t voxels_per_side) {
-    CHECK_NE(voxels_per_side, 0u);
+    // CHECK_NE(voxels_per_side, 0u);
     return (end_voxel_index - start_voxel_index) +
            (end_block_index - start_block_index) * voxels_per_side;
   }

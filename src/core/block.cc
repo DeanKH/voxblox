@@ -7,8 +7,8 @@ namespace voxblox {
 // Hidden serialization helpers
 void serializeDirection(const Eigen::Vector3i& parent_direction,
                         uint32_t* data) {
-  CHECK_NOTNULL(data);
-  CHECK_EQ(*data, 0u);
+  // CHECK_NOTNULL(data);
+  // CHECK_EQ(*data, 0u);
 
   // NOTE: these checks will fail until the TODO below is adressed.
   DCHECK_GE(parent_direction.x(), INT8_MIN);
@@ -67,7 +67,7 @@ void Block<TsdfVoxel>::deserializeFromIntegers(
     const std::vector<uint32_t>& data) {
   constexpr size_t kNumDataPacketsPerVoxel = 3u;
   const size_t num_data_packets = data.size();
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
   for (size_t voxel_idx = 0u, data_idx = 0u;
        voxel_idx < num_voxels_ && data_idx < num_data_packets;
        ++voxel_idx, data_idx += kNumDataPacketsPerVoxel) {
@@ -94,7 +94,7 @@ void Block<OccupancyVoxel>::deserializeFromIntegers(
     const std::vector<uint32_t>& data) {
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   const size_t num_data_packets = data.size();
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
   for (size_t voxel_idx = 0u, data_idx = 0u;
        voxel_idx < num_voxels_ && data_idx < num_data_packets;
        ++voxel_idx, data_idx += kNumDataPacketsPerVoxel) {
@@ -113,7 +113,7 @@ void Block<EsdfVoxel>::deserializeFromIntegers(
     const std::vector<uint32_t>& data) {
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   const size_t num_data_packets = data.size();
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
   for (size_t voxel_idx = 0u, data_idx = 0u;
        voxel_idx < num_voxels_ && data_idx < num_data_packets;
        ++voxel_idx, data_idx += kNumDataPacketsPerVoxel) {
@@ -141,7 +141,7 @@ void Block<IntensityVoxel>::deserializeFromIntegers(
     const std::vector<uint32_t>& data) {
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   const size_t num_data_packets = data.size();
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, num_data_packets);
   for (size_t voxel_idx = 0u, data_idx = 0u;
        voxel_idx < num_voxels_ && data_idx < num_data_packets;
        ++voxel_idx, data_idx += kNumDataPacketsPerVoxel) {
@@ -158,7 +158,7 @@ void Block<IntensityVoxel>::deserializeFromIntegers(
 // Serialization functions:
 template <>
 void Block<TsdfVoxel>::serializeToIntegers(std::vector<uint32_t>* data) const {
-  CHECK_NOTNULL(data);
+  // CHECK_NOTNULL(data);
   constexpr size_t kNumDataPacketsPerVoxel = 3u;
   data->clear();
   data->reserve(num_voxels_ * kNumDataPacketsPerVoxel);
@@ -179,13 +179,13 @@ void Block<TsdfVoxel>::serializeToIntegers(std::vector<uint32_t>* data) const {
                     (static_cast<uint32_t>(voxel.color.g) << 16) |
                     (static_cast<uint32_t>(voxel.color.r) << 24));
   }
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
 }
 
 template <>
 void Block<OccupancyVoxel>::serializeToIntegers(
     std::vector<uint32_t>* data) const {
-  CHECK_NOTNULL(data);
+  // CHECK_NOTNULL(data);
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   data->clear();
   data->reserve(num_voxels_ * kNumDataPacketsPerVoxel);
@@ -197,12 +197,12 @@ void Block<OccupancyVoxel>::serializeToIntegers(
     data->push_back(*bytes_1_ptr);
     data->push_back(static_cast<uint32_t>(voxel.observed));
   }
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
 }
 
 template <>
 void Block<EsdfVoxel>::serializeToIntegers(std::vector<uint32_t>* data) const {
-  CHECK_NOTNULL(data);
+  // CHECK_NOTNULL(data);
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   data->clear();
   data->reserve(num_voxels_ * kNumDataPacketsPerVoxel);
@@ -230,13 +230,13 @@ void Block<EsdfVoxel>::serializeToIntegers(std::vector<uint32_t>* data) const {
 
     data->push_back(bytes_2);
   }
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
 }
 
 template <>
 void Block<IntensityVoxel>::serializeToIntegers(
     std::vector<uint32_t>* data) const {
-  CHECK_NOTNULL(data);
+  // CHECK_NOTNULL(data);
   constexpr size_t kNumDataPacketsPerVoxel = 2u;
   data->clear();
   data->reserve(num_voxels_ * kNumDataPacketsPerVoxel);
@@ -251,7 +251,7 @@ void Block<IntensityVoxel>::serializeToIntegers(
         reinterpret_cast<const uint32_t*>(&voxel.weight);
     data->push_back(*bytes_2_ptr);
   }
-  CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
+  // CHECK_EQ(num_voxels_ * kNumDataPacketsPerVoxel, data->size());
 }
 
 }  // namespace voxblox

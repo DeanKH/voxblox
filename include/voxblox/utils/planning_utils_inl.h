@@ -14,7 +14,7 @@ template <typename VoxelType>
 void getSphereAroundPoint(const Layer<VoxelType>& layer, const Point& center,
                           FloatingPoint radius,
                           HierarchicalIndexMap* block_voxel_list) {
-  CHECK_NOTNULL(block_voxel_list);
+  // CHECK_NOTNULL(block_voxel_list);
   float voxel_size = layer.voxel_size();
   float voxel_size_inv = 1.0 / layer.voxel_size();
   int voxels_per_side = layer.voxels_per_side();
@@ -51,8 +51,8 @@ template <typename VoxelType>
 void getAndAllocateSphereAroundPoint(const Point& center, FloatingPoint radius,
                                      Layer<VoxelType>* layer,
                                      HierarchicalIndexMap* block_voxel_list) {
-  CHECK_NOTNULL(layer);
-  CHECK_NOTNULL(block_voxel_list);
+  // CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(block_voxel_list);
   getSphereAroundPoint(*layer, center, radius, block_voxel_list);
   for (auto it = block_voxel_list->begin(); it != block_voxel_list->end();
        ++it) {
@@ -68,7 +68,7 @@ template <typename VoxelType>
 void fillSphereAroundPoint(const Point& center, const FloatingPoint radius,
                            const FloatingPoint max_distance_m,
                            Layer<VoxelType>* layer) {
-  CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(layer);
   HierarchicalIndexMap block_voxel_list;
   getAndAllocateSphereAroundPoint(center, radius, layer, &block_voxel_list);
 
@@ -105,7 +105,7 @@ template <typename VoxelType>
 void clearSphereAroundPoint(const Point& center, const FloatingPoint radius,
                             const FloatingPoint max_distance_m,
                             Layer<VoxelType>* layer) {
-  CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(layer);
   HierarchicalIndexMap block_voxel_list;
   getAndAllocateSphereAroundPoint(center, radius, layer, &block_voxel_list);
 

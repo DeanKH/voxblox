@@ -6,7 +6,7 @@
 #include <atomic>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <Eigen/Core>
 
 #include "voxblox/core/block_hash.h"
@@ -132,7 +132,7 @@ class RayCaster {
  */
 inline void castRay(const Point& start_scaled, const Point& end_scaled,
                     AlignedVector<GlobalIndex>* indices) {
-  CHECK_NOTNULL(indices);
+  // CHECK_NOTNULL(indices);
 
   RayCaster ray_caster(start_scaled, end_scaled);
 

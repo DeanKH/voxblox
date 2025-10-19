@@ -8,7 +8,7 @@ namespace voxblox {
 TsdfIntegratorBase::Ptr TsdfIntegratorFactory::create(
     const std::string& integrator_type_name,
     const TsdfIntegratorBase::Config& config, Layer<TsdfVoxel>* layer) {
-  CHECK(!integrator_type_name.empty());
+  // CHECK(!integrator_type_name.empty());
 
   int integrator_type = 1;
   for (const std::string& valid_integrator_type_name :
@@ -19,14 +19,14 @@ TsdfIntegratorBase::Ptr TsdfIntegratorFactory::create(
     }
     ++integrator_type;
   }
-  LOG(FATAL) << "Unknown TSDF integrator type: " << integrator_type_name;
+  // LOG(FATAL) << "Unknown TSDF integrator type: " << integrator_type_name;
   return TsdfIntegratorBase::Ptr();
 }
 
 TsdfIntegratorBase::Ptr TsdfIntegratorFactory::create(
     const TsdfIntegratorType integrator_type,
     const TsdfIntegratorBase::Config& config, Layer<TsdfVoxel>* layer) {
-  CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(layer);
   switch (integrator_type) {
     case TsdfIntegratorType::kSimple:
       return TsdfIntegratorBase::Ptr(new SimpleTsdfIntegrator(config, layer));
@@ -38,8 +38,8 @@ TsdfIntegratorBase::Ptr TsdfIntegratorFactory::create(
       return TsdfIntegratorBase::Ptr(new FastTsdfIntegrator(config, layer));
       break;
     default:
-      LOG(FATAL) << "Unknown TSDF integrator type: "
-                 << static_cast<int>(integrator_type);
+      // LOG(FATAL) << "Unknown TSDF integrator type: "
+      << static_cast<int>(integrator_type);
       break;
   }
   return TsdfIntegratorBase::Ptr();
@@ -56,7 +56,7 @@ TsdfIntegratorBase::TsdfIntegratorBase(const Config& config,
   setLayer(layer);
 
   if (config_.integrator_threads == 0) {
-    LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
+    // LOG(WARNING) << "Automatic core count failed, defaulting to 1 threads";
     config_.integrator_threads = 1;
   }
   // clearing rays have no utility if voxel_carving is disabled
@@ -66,7 +66,7 @@ TsdfIntegratorBase::TsdfIntegratorBase(const Config& config,
 }
 
 void TsdfIntegratorBase::setLayer(Layer<TsdfVoxel>* layer) {
-  CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(layer);
 
   layer_ = layer;
 
@@ -244,7 +244,7 @@ void SimpleTsdfIntegrator::integratePointCloud(const Transformation& T_G_C,
                                                const Colors& colors,
                                                const bool freespace_points) {
   timing::Timer integrate_timer("integrate/simple");
-  CHECK_EQ(points_C.size(), colors.size());
+  // CHECK_EQ(points_C.size(), colors.size());
 
   std::unique_ptr<ThreadSafeIndex> index_getter(
       ThreadSafeIndexFactory::get(config_.integration_order_mode, points_C));
@@ -309,7 +309,7 @@ void MergedTsdfIntegrator::integratePointCloud(const Transformation& T_G_C,
                                                const Colors& colors,
                                                const bool freespace_points) {
   timing::Timer integrate_timer("integrate/merged");
-  CHECK_EQ(points_C.size(), colors.size());
+  // CHECK_EQ(points_C.size(), colors.size());
 
   // Pre-compute a list of unique voxels to end on.
   // Create a hashmap: VOXEL INDEX -> index in original cloud.
@@ -365,9 +365,9 @@ void MergedTsdfIntegrator::bundleRays(
     }
   }
 
-  VLOG(3) << "Went from " << points_C.size() << " points to "
-          << voxel_map->size() << " raycasts  and " << clear_map->size()
-          << " clear rays.";
+  V  // LOG(3) << "Went from " << points_C.size() << " points to "
+      << voxel_map->size() << " raycasts  and " << clear_map->size()
+      << " clear rays.";
 }
 
 void MergedTsdfIntegrator::integrateVoxel(
@@ -557,7 +557,7 @@ void FastTsdfIntegrator::integratePointCloud(const Transformation& T_G_C,
                                              const Colors& colors,
                                              const bool freespace_points) {
   timing::Timer integrate_timer("integrate/fast");
-  CHECK_EQ(points_C.size(), colors.size());
+  // CHECK_EQ(points_C.size(), colors.size());
 
   integration_start_time_ = std::chrono::steady_clock::now();
 

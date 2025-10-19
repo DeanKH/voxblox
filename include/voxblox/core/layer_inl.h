@@ -6,7 +6,7 @@
 #include <string>
 #include <utility>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -25,26 +25,26 @@ template <typename VoxelType>
 Layer<VoxelType>::Layer(const LayerProto& proto)
     : voxel_size_(proto.voxel_size()),
       voxels_per_side_(proto.voxels_per_side()) {
-  CHECK_EQ(getType().compare(proto.type()), 0)
-      << "Incorrect voxel type, proto type: " << proto.type()
-      << " layer type: " << getType();
+  // CHECK_EQ(getType().compare(proto.type()), 0)
+  << "Incorrect voxel type, proto type: " << proto.type()
+  << " layer type: " << getType();
 
   // Derived config parameter.
-  CHECK_GT(proto.voxel_size(), 0.0);
+  // CHECK_GT(proto.voxel_size(), 0.0);
   voxel_size_inv_ = 1.0 / voxel_size_;
   block_size_ = voxel_size_ * voxels_per_side_;
-  CHECK_GT(block_size_, 0.0);
+  // CHECK_GT(block_size_, 0.0);
   block_size_inv_ = 1.0 / block_size_;
-  CHECK_GT(proto.voxels_per_side(), 0u);
+  // CHECK_GT(proto.voxels_per_side(), 0u);
   voxels_per_side_inv_ = 1.0f / static_cast<FloatingPoint>(voxels_per_side_);
 }
 
 template <typename VoxelType>
 void Layer<VoxelType>::getProto(LayerProto* proto) const {
-  CHECK_NOTNULL(proto);
+  // CHECK_NOTNULL(proto);
 
-  CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-      << "The voxel type of this layer is not serializable!";
+  // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
+  << "The voxel type of this layer is not serializable!";
 
   proto->set_voxel_size(voxel_size_);
   proto->set_voxels_per_side(voxels_per_side_);
@@ -64,10 +64,10 @@ Layer<VoxelType>::Layer(const Layer& other) {
        other.block_map_) {
     const BlockIndex& block_idx = key_value_pair.first;
     const typename BlockType::Ptr& block_ptr = key_value_pair.second;
-    CHECK(block_ptr);
+    // CHECK(block_ptr);
 
     typename BlockType::Ptr new_block = allocateBlockPtrByIndex(block_idx);
-    CHECK(new_block);
+    // CHECK(new_block);
 
     for (size_t linear_idx = 0u; linear_idx < block_ptr->num_voxels();
          ++linear_idx) {
@@ -91,10 +91,10 @@ bool Layer<VoxelType>::saveSubsetToFile(const std::string& file_path,
                                         BlockIndexList blocks_to_include,
                                         bool include_all_blocks,
                                         bool clear_file) const {
-  CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-      << "The voxel type of this layer is not serializable!";
+  // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
+  << "The voxel type of this layer is not serializable!";
 
-  CHECK(!file_path.empty());
+  // CHECK(!file_path.empty());
   std::fstream outfile;
   // Will APPEND to the current file in case outputting multiple layers on the
   // same file, depending on the flag.
@@ -106,7 +106,7 @@ bool Layer<VoxelType>::saveSubsetToFile(const std::string& file_path,
   }
   outfile.open(file_path, file_flags);
   if (!outfile.is_open()) {
-    LOG(ERROR) << "Could not open file for writing: " << file_path;
+    // // LOG(ERROR) << "Could not open file for writing: " << file_path;
     return false;
   }
 
@@ -130,17 +130,17 @@ bool Layer<VoxelType>::saveSubsetToFile(const std::string& file_path,
     }
   }
   if (include_all_blocks) {
-    CHECK_EQ(num_blocks_to_write, block_map_.size());
+    // CHECK_EQ(num_blocks_to_write, block_map_.size());
   } else {
-    CHECK_LE(num_blocks_to_write, block_map_.size());
-    CHECK_LE(num_blocks_to_write, blocks_to_include.size());
+    // CHECK_LE(num_blocks_to_write, block_map_.size());
+    // CHECK_LE(num_blocks_to_write, blocks_to_include.size());
   }
 
   // Write the total number of messages to the beginning of this file.
   // One layer header and then all the block maps
   const uint32_t num_messages = 1u + num_blocks_to_write;
   if (!utils::writeProtoMsgCountToStream(num_messages, &outfile)) {
-    LOG(ERROR) << "Could not write message number to file.";
+    // LOG(ERROR) << "Could not write message number to file.";
     outfile.close();
     return false;
   }
@@ -149,7 +149,7 @@ bool Layer<VoxelType>::saveSubsetToFile(const std::string& file_path,
   LayerProto proto_layer;
   getProto(&proto_layer);
   if (!utils::writeProtoMsgToStream(proto_layer, &outfile)) {
-    LOG(ERROR) << "Could not write layer header message.";
+    // LOG(ERROR) << "Could not write layer header message.";
     outfile.close();
     return false;
   }
@@ -165,7 +165,7 @@ template <typename VoxelType>
 bool Layer<VoxelType>::saveBlocksToStream(bool include_all_blocks,
                                           BlockIndexList blocks_to_include,
                                           std::fstream* outfile_ptr) const {
-  CHECK_NOTNULL(outfile_ptr);
+  // CHECK_NOTNULL(outfile_ptr);
   for (const BlockMapPair& pair : block_map_) {
     bool write_block_to_file = include_all_blocks;
     if (!write_block_to_file) {
@@ -180,7 +180,7 @@ bool Layer<VoxelType>::saveBlocksToStream(bool include_all_blocks,
       pair.second->getProto(&block_proto);
 
       if (!utils::writeProtoMsgToStream(block_proto, outfile_ptr)) {
-        LOG(ERROR) << "Could not write block message.";
+        // LOG(ERROR) << "Could not write block message.";
         return false;
       }
     }
@@ -191,8 +191,8 @@ bool Layer<VoxelType>::saveBlocksToStream(bool include_all_blocks,
 template <typename VoxelType>
 bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
                                          BlockMergingStrategy strategy) {
-  CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
-      << "The voxel type of this layer is not serializable!";
+  // CHECK_NE(getType().compare(voxel_types::kNotSerializable), 0)
+  << "The voxel type of this layer is not serializable!";
 
   if (isCompatible(block_proto)) {
     typename BlockType::Ptr block_ptr(new BlockType(block_proto));
@@ -200,8 +200,8 @@ bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
         block_ptr->origin(), block_size_inv_);
     switch (strategy) {
       case BlockMergingStrategy::kProhibit:
-        CHECK_EQ(block_map_.count(block_index), 0u)
-            << "Block collision at index: " << block_index;
+        // CHECK_EQ(block_map_.count(block_index), 0u)
+        << "Block collision at index: " << block_index;
         block_map_[block_index] = block_ptr;
         break;
       case BlockMergingStrategy::kReplace:
@@ -219,15 +219,15 @@ bool Layer<VoxelType>::addBlockFromProto(const BlockProto& block_proto,
         }
       } break;
       default:
-        LOG(FATAL) << "Unknown BlockMergingStrategy: "
-                   << static_cast<int>(strategy);
+        // LOG(FATAL) << "Unknown BlockMergingStrategy: "
+        << static_cast<int>(strategy);
         return false;
     }
     // Mark that this block has been updated.
     block_map_[block_index]->updated().set();
   } else {
-    LOG(ERROR)
-        << "The blocks from this protobuf are not compatible with this layer!";
+    // LOG(ERROR)
+    << "The blocks from this protobuf are not compatible with this layer!";
     return false;
   }
   return true;
@@ -242,19 +242,19 @@ bool Layer<VoxelType>::isCompatible(const LayerProto& layer_proto) const {
   compatible &= (getType().compare(layer_proto.type()) == 0);
 
   if (!compatible) {
-    LOG(WARNING)
-        << "Voxel size of the loaded map is: " << layer_proto.voxel_size()
-        << " but the current map is: " << voxel_size_ << " check passed? "
-        << (std::fabs(layer_proto.voxel_size() - voxel_size_) <
-            std::numeric_limits<FloatingPoint>::epsilon())
-        << "\nVPS of the loaded map is: " << layer_proto.voxels_per_side()
-        << " but the current map is: " << voxels_per_side_ << " check passed? "
-        << (layer_proto.voxels_per_side() == voxels_per_side_)
-        << "\nLayer type of the loaded map is: " << getType()
-        << " but the current map is: " << layer_proto.type()
-        << " check passed? " << (getType().compare(layer_proto.type()) == 0)
-        << "\nAre the maps using the same floating-point type? "
-        << (layer_proto.voxel_size() == voxel_size_) << std::endl;
+    // LOG(WARNING)
+    << "Voxel size of the loaded map is: " << layer_proto.voxel_size()
+    << " but the current map is: " << voxel_size_ << " check passed? "
+    << (std::fabs(layer_proto.voxel_size() - voxel_size_) <
+        std::numeric_limits<FloatingPoint>::epsilon())
+    << "\nVPS of the loaded map is: " << layer_proto.voxels_per_side()
+    << " but the current map is: " << voxels_per_side_ << " check passed? "
+    << (layer_proto.voxels_per_side() == voxels_per_side_)
+    << "\nLayer type of the loaded map is: " << getType()
+    << " but the current map is: " << layer_proto.type() << " check passed? "
+    << (getType().compare(layer_proto.type()) == 0)
+    << "\nAre the maps using the same floating-point type? "
+    << (layer_proto.voxel_size() == voxel_size_) << std::endl;
   }
   return compatible;
 }

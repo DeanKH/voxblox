@@ -14,7 +14,7 @@
 #include <utility>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <Eigen/Core>
 
 #include "voxblox/core/block_hash.h"

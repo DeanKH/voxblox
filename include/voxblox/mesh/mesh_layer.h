@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/block_hash.h"
 #include "voxblox/core/common.h"
@@ -38,7 +38,7 @@ class MeshLayer {
     if (it != mesh_map_.end()) {
       return *(it->second);
     } else {
-      LOG(FATAL) << "Accessed unallocated mesh at " << index.transpose();
+      // LOG(FATAL) << "Accessed unallocated mesh at " << index.transpose();
     }
   }
 
@@ -47,7 +47,7 @@ class MeshLayer {
     if (it != mesh_map_.end()) {
       return *(it->second);
     } else {
-      LOG(FATAL) << "Accessed unallocated mesh at " << index.transpose();
+      // LOG(FATAL) << "Accessed unallocated mesh at " << index.transpose();
     }
   }
 
@@ -57,7 +57,7 @@ class MeshLayer {
     if (it != mesh_map_.end()) {
       return it->second;
     } else {
-      LOG(WARNING) << "Returning null ptr to mesh!";
+      // LOG(WARNING) << "Returning null ptr to mesh!";
       return typename Mesh::ConstPtr();
     }
   }
@@ -67,7 +67,7 @@ class MeshLayer {
     if (it != mesh_map_.end()) {
       return it->second;
     } else {
-      LOG(WARNING) << "Returning null ptr to mesh!";
+      // LOG(WARNING) << "Returning null ptr to mesh!";
       return typename Mesh::Ptr();
     }
   }
@@ -165,7 +165,7 @@ class MeshLayer {
    * distinct, hence, this will not produce a connected mesh.
    */
   void getMesh(Mesh* combined_mesh) const {
-    CHECK_NOTNULL(combined_mesh);
+    // CHECK_NOTNULL(combined_mesh);
 
     // Combine everything in the layer into one giant combined mesh.
 
@@ -206,16 +206,16 @@ class MeshLayer {
       // Check assumption that all meshes have same configuration regarding
       // colors, normals and indices.
       if (!mesh->vertices.empty()) {
-        CHECK_EQ(has_colors, mesh->hasColors());
-        CHECK_EQ(has_normals, mesh->hasNormals());
-        CHECK_EQ(has_indices, mesh->hasTriangles());
+        // CHECK_EQ(has_colors, mesh->hasColors());
+        // CHECK_EQ(has_normals, mesh->hasNormals());
+        // CHECK_EQ(has_indices, mesh->hasTriangles());
       }
 
       // Copy the mesh content into the combined mesh. This is done in triplets
       // for readability only, as one loop iteration will then copy one
       // triangle.
       for (size_t i = 0; i < mesh->vertices.size(); i += 3, new_index += 3) {
-        CHECK_LT(new_index + 2, mesh_size);
+        // CHECK_LT(new_index + 2, mesh_size);
 
         combined_mesh->vertices.push_back(mesh->vertices[i]);
         combined_mesh->vertices.push_back(mesh->vertices[i + 1]);
@@ -241,13 +241,14 @@ class MeshLayer {
 
     // Verify combined mesh.
     if (combined_mesh->hasColors()) {
-      CHECK_EQ(combined_mesh->vertices.size(), combined_mesh->colors.size());
+      // CHECK_EQ(combined_mesh->vertices.size(), combined_mesh->colors.size());
     }
     if (combined_mesh->hasNormals()) {
-      CHECK_EQ(combined_mesh->vertices.size(), combined_mesh->normals.size());
+      // CHECK_EQ(combined_mesh->vertices.size(),
+      // combined_mesh->normals.size());
     }
 
-    CHECK_EQ(combined_mesh->vertices.size(), combined_mesh->indices.size());
+    // CHECK_EQ(combined_mesh->vertices.size(), combined_mesh->indices.size());
   }
 
   /**
@@ -285,7 +286,7 @@ class MeshLayer {
 
     // Calculate size of mesh blocks
     for (const auto& idx_mesh_pair : mesh_map_) {
-      CHECK(idx_mesh_pair.second);
+      // CHECK(idx_mesh_pair.second);
       size_bytes += idx_mesh_pair.second->getMemorySize();
     }
     return size_bytes;

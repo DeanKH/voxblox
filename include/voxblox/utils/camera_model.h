@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <kindr/minimal/quat-transformation.h>
 #include <Eigen/Core>
 

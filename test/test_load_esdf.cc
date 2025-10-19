@@ -1,7 +1,7 @@
 #include <memory>
 #include <string>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/block.h"
 #include "voxblox/core/layer.h"
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   Layer<EsdfVoxel>::Ptr layer_from_file;
   io::LoadLayer<EsdfVoxel>(file, &layer_from_file);
 
-  LOG(INFO) << "Layer memory size: " << layer_from_file->getMemorySize();
+  // LOG(INFO) << "Layer memory size: " << layer_from_file->getMemorySize();
 
   return 0;
 }

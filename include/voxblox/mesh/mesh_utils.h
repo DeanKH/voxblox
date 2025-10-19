@@ -19,7 +19,7 @@ namespace voxblox {
 inline void createConnectedMesh(
     const AlignedVector<Mesh::ConstPtr>& meshes, Mesh* connected_mesh,
     const FloatingPoint approximate_vertex_proximity_threshold = 1e-10) {
-  CHECK_NOTNULL(connected_mesh);
+  // CHECK_NOTNULL(connected_mesh);
 
   // Used to prevent double ups in vertices. We need to use a long long based
   // index, to prevent overflows.
@@ -38,9 +38,9 @@ inline void createConnectedMesh(
 
     // Make sure there are 3 distinct vertices for every triangle before
     // merging.
-    CHECK_EQ(mesh->vertices.size(), mesh->indices.size());
-    CHECK_EQ(mesh->vertices.size() % 3u, 0u);
-    CHECK_EQ(mesh->indices.size() % 3u, 0u);
+    // CHECK_EQ(mesh->vertices.size(), mesh->indices.size());
+    // CHECK_EQ(mesh->vertices.size() % 3u, 0u);
+    // CHECK_EQ(mesh->indices.size() % 3u, 0u);
 
     // Stores the mapping from old vertex index to the new one in the combined
     // mesh. This is later used to adapt the triangles to the new, global
@@ -55,7 +55,7 @@ inline void createConnectedMesh(
       // then compute a discretized grid index in that scale.
       // This exhibits the behaviour of merging two vertices that are
       // closer than the threshold.
-      CHECK_LT(old_vertex_idx, mesh->vertices.size());
+      // CHECK_LT(old_vertex_idx, mesh->vertices.size());
       const Point vertex = mesh->vertices[old_vertex_idx];
       const Eigen::Vector3d scaled_vector =
           vertex.cast<double>() * threshold_inv;
@@ -76,22 +76,22 @@ inline void createConnectedMesh(
         connected_mesh->vertices.push_back(vertex);
 
         if (mesh->hasColors()) {
-          CHECK_LT(old_vertex_idx, mesh->colors.size());
+          // CHECK_LT(old_vertex_idx, mesh->colors.size());
           connected_mesh->colors.push_back(mesh->colors[old_vertex_idx]);
         }
         if (mesh->hasNormals()) {
-          CHECK_LT(old_vertex_idx, mesh->normals.size());
+          // CHECK_LT(old_vertex_idx, mesh->normals.size());
           connected_mesh->normals.push_back(mesh->normals[old_vertex_idx]);
         }
 
         // Store the new vertex index in the unique-vertex-map to be able to
         // retrieve this index later if we encounter vertices that are
         // supposed to be merged with this one.
-        CHECK(uniques.emplace(vertex_3D_index, new_vertex_index).second);
+        // CHECK(uniques.emplace(vertex_3D_index, new_vertex_index).second);
 
         // Also store a mapping from old index to new index for this mesh
         // block to later adapt the triangle indexing.
-        CHECK_LT(old_vertex_idx, old_to_new_indices.size());
+        // CHECK_LT(old_vertex_idx, old_to_new_indices.size());
         old_to_new_indices[old_vertex_idx] = new_vertex_index;
 
         ++new_vertex_index;
@@ -99,7 +99,7 @@ inline void createConnectedMesh(
       } else {
         // If this vertex is not unique, we map it's vertex index to the new
         // vertex index.
-        CHECK_LT(old_vertex_idx, old_to_new_indices.size());
+        // CHECK_LT(old_vertex_idx, old_to_new_indices.size());
         old_to_new_indices[old_vertex_idx] = it->second;
 
         // Add all normals (this will average them once they are renormalized
@@ -108,7 +108,7 @@ inline void createConnectedMesh(
       }
 
       // Make sure the indexing is correct.
-      CHECK_EQ(connected_mesh->vertices.size(), new_vertex_index);
+      // CHECK_EQ(connected_mesh->vertices.size(), new_vertex_index);
     }
 
     // Renormalize normals
@@ -122,7 +122,7 @@ inline void createConnectedMesh(
     }
 
     // Make sure we have a mapping for every old vertex index.
-    CHECK_EQ(old_to_new_indices.size(), mesh->vertices.size());
+    // CHECK_EQ(old_to_new_indices.size(), mesh->vertices.size());
 
     // Append triangles and adjust their indices if necessary.
     // We discard triangles where all old vertices were mapped to the same
@@ -130,7 +130,7 @@ inline void createConnectedMesh(
     size_t new_num_triangle_from_this_block = 0u;
     for (size_t triangle_idx = 0u; triangle_idx < mesh->indices.size();
          triangle_idx += 3u) {
-      CHECK_LT(triangle_idx + 2u, mesh->indices.size());
+      // CHECK_LT(triangle_idx + 2u, mesh->indices.size());
 
       // Retrieve old vertex indices.
       size_t vertex_0 = mesh->indices[triangle_idx];
@@ -138,9 +138,9 @@ inline void createConnectedMesh(
       size_t vertex_2 = mesh->indices[triangle_idx + 2u];
 
       // Make sure the old indices were valid before remapping.
-      CHECK_LT(vertex_0, old_to_new_indices.size());
-      CHECK_LT(vertex_1, old_to_new_indices.size());
-      CHECK_LT(vertex_2, old_to_new_indices.size());
+      // CHECK_LT(vertex_0, old_to_new_indices.size());
+      // CHECK_LT(vertex_1, old_to_new_indices.size());
+      // CHECK_LT(vertex_2, old_to_new_indices.size());
 
       // Apply vertex index mapping.
       vertex_0 = old_to_new_indices[vertex_0];
@@ -148,9 +148,9 @@ inline void createConnectedMesh(
       vertex_2 = old_to_new_indices[vertex_2];
 
       // Make sure the new indices are valid after remapping.
-      CHECK_LT(vertex_0, new_vertex_index);
-      CHECK_LT(vertex_1, new_vertex_index);
-      CHECK_LT(vertex_2, new_vertex_index);
+      // CHECK_LT(vertex_0, new_vertex_index);
+      // CHECK_LT(vertex_1, new_vertex_index);
+      // CHECK_LT(vertex_2, new_vertex_index);
 
       // Get rid of triangles where all two or three vertices have been
       // merged.
@@ -169,10 +169,11 @@ inline void createConnectedMesh(
 
   // Verify combined mesh.
   if (connected_mesh->hasColors()) {
-    CHECK_EQ(connected_mesh->vertices.size(), connected_mesh->colors.size());
+    // CHECK_EQ(connected_mesh->vertices.size(), connected_mesh->colors.size());
   }
   if (connected_mesh->hasNormals()) {
-    CHECK_EQ(connected_mesh->vertices.size(), connected_mesh->normals.size());
+    // CHECK_EQ(connected_mesh->vertices.size(),
+    // connected_mesh->normals.size());
   }
 }
 

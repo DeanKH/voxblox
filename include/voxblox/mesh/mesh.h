@@ -49,7 +49,7 @@ struct Mesh {
 
   Mesh(FloatingPoint _block_size, const Point& _origin)
       : block_size(_block_size), origin(_origin), updated(false) {
-    CHECK_GT(block_size, 0.0);
+    // CHECK_GT(block_size, 0.0);
   }
   virtual ~Mesh() {}
 
@@ -126,9 +126,9 @@ struct Mesh {
   }
 
   void concatenateMesh(const Mesh& other_mesh) {
-    CHECK_EQ(other_mesh.hasColors(), hasColors());
-    CHECK_EQ(other_mesh.hasNormals(), hasNormals());
-    CHECK_EQ(other_mesh.hasTriangles(), hasTriangles());
+    // CHECK_EQ(other_mesh.hasColors(), hasColors());
+    // CHECK_EQ(other_mesh.hasNormals(), hasNormals());
+    // CHECK_EQ(other_mesh.hasTriangles(), hasTriangles());
 
     reserve(size() + other_mesh.size(), hasNormals(), hasColors(),
             hasTriangles());

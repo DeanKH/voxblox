@@ -142,8 +142,8 @@ FloatingPoint evaluateLayersRmse(
           ++evaluation_details.num_non_overlapping_voxels;
           break;
         default:
-          LOG(FATAL) << "Unkown voxel evaluation result: "
-                     << static_cast<int>(result);
+          // LOG(FATAL) << "Unkown voxel evaluation result: "
+          << static_cast<int>(result);
       }
     }
   }
@@ -179,9 +179,9 @@ FloatingPoint evaluateLayersRmse(
     *evaluation_result = evaluation_details;
   }
 
-  VLOG(2) << evaluation_details.toString();
+  V  // LOG(2) << evaluation_details.toString();
 
-  return evaluation_details.rmse;
+      return evaluation_details.rmse;
 }
 
 /**
@@ -199,7 +199,7 @@ template <typename VoxelType>
 VoxelEvaluationResult computeVoxelError(
     const VoxelType& voxel_gt, const VoxelType& voxel_test,
     const VoxelEvaluationMode evaluation_mode, FloatingPoint* error) {
-  CHECK_NOTNULL(error);
+  // CHECK_NOTNULL(error);
   *error = 0.0;
 
   // Ignore voxels that are not observed in both layers.

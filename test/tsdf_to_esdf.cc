@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/block.h"
 #include "voxblox/core/esdf_map.h"
@@ -32,9 +32,10 @@ int main(int argc, char** argv) {
   Layer<TsdfVoxel>::Ptr layer_from_file;
   io::LoadLayer<TsdfVoxel>(file, &layer_from_file);
 
-  LOG(INFO) << "Layer memory size: " << layer_from_file->getMemorySize();
-  LOG(INFO) << "Layer voxel size: " << layer_from_file->voxel_size();
-  LOG(INFO) << "Layer voxels per side: " << layer_from_file->voxels_per_side();
+  // LOG(INFO) << "Layer memory size: " << layer_from_file->getMemorySize();
+  // LOG(INFO) << "Layer voxel size: " << layer_from_file->voxel_size();
+  // LOG(INFO) << "Layer voxels per side: " <<
+  // layer_from_file->voxels_per_side();
 
   // ESDF maps.
   EsdfMap::Config esdf_config;

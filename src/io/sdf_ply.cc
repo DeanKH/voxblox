@@ -9,7 +9,7 @@ namespace io {
 template <>
 bool getColorFromVoxel(const TsdfVoxel& voxel, const float sdf_color_range,
                        const float sdf_max_value, Color* color) {
-  CHECK_NOTNULL(color);
+  // CHECK_NOTNULL(color);
 
   static constexpr float kTolerance = 1e-6;
   if (voxel.weight <= kTolerance) {
@@ -26,8 +26,8 @@ bool getColorFromVoxel(const TsdfVoxel& voxel, const float sdf_color_range,
   const float color_factor =
       0.5f * (1.0f + (truncated_voxel_distance / sdf_color_range));
 
-  CHECK_LE(color_factor, 1.0f);
-  CHECK_GE(color_factor, 0.0f);
+  // CHECK_LE(color_factor, 1.0f);
+  // CHECK_GE(color_factor, 0.0f);
 
   *color = rainbowColorMap(0.66f - 0.66f * color_factor);
 
@@ -37,7 +37,7 @@ bool getColorFromVoxel(const TsdfVoxel& voxel, const float sdf_color_range,
 template <>
 bool getColorFromVoxel(const EsdfVoxel& voxel, const float sdf_color_range,
                        const float sdf_max_value, Color* color) {
-  CHECK_NOTNULL(color);
+  // CHECK_NOTNULL(color);
   if (!voxel.observed) {
     return false;
   }
@@ -52,8 +52,8 @@ bool getColorFromVoxel(const EsdfVoxel& voxel, const float sdf_color_range,
   const float color_factor =
       0.5f * (1.0f + (truncated_voxel_distance / sdf_color_range));
 
-  CHECK_LE(color_factor, 1.0f);
-  CHECK_GE(color_factor, 0.0f);
+  // CHECK_LE(color_factor, 1.0f);
+  // CHECK_GE(color_factor, 0.0f);
 
   *color = rainbowColorMap(0.66f - 0.66f * color_factor);
 

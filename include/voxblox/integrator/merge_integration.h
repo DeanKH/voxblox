@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 #include "voxblox/core/layer.h"
@@ -20,7 +20,7 @@ static const FloatingPoint kUnitCubeDiagonalLength = std::sqrt(3.0);
 template <typename VoxelType>
 void mergeLayerAintoLayerB(const Layer<VoxelType>& layer_A,
                            Layer<VoxelType>* layer_B) {
-  CHECK_NOTNULL(layer_B);
+  // CHECK_NOTNULL(layer_B);
   // if voxel layout is different resample layer A to match B
   const Layer<VoxelType>* layer_A_ptr;
   Layer<VoxelType> layer_A_resampled(layer_B->voxel_size(),
@@ -81,7 +81,7 @@ void mergeLayerAintoLayerB(const Layer<VoxelType>& layer_A,
 template <typename VoxelType>
 void resampleLayer(const Layer<VoxelType>& layer_in,
                    Layer<VoxelType>* layer_out) {
-  CHECK_NOTNULL(layer_out);
+  // CHECK_NOTNULL(layer_out);
   transformLayer(layer_in, Transformation(), layer_out);
 }
 
@@ -146,7 +146,7 @@ template <typename VoxelType>
 void transformLayer(const Layer<VoxelType>& layer_in,
                     const Transformation& T_out_in,
                     Layer<VoxelType>* layer_out) {
-  CHECK_NOTNULL(layer_out);
+  // CHECK_NOTNULL(layer_out);
 
   // first mark all the blocks in the output layer that may be filled by the
   // input layer (we are conservative here approximating the input blocks as
@@ -242,11 +242,11 @@ void evaluateLayerRmseAtPoses(
     std::vector<std::pair<typename voxblox::Layer<VoxelType>::Ptr,
                           typename voxblox::Layer<VoxelType>::Ptr>>*
         aligned_layers_and_error_layers = nullptr) {
-  CHECK_NOTNULL(voxel_evaluation_details_vector);
+  // CHECK_NOTNULL(voxel_evaluation_details_vector);
 
   // Check if layers are compatible.
-  CHECK_NEAR(layer_A.voxel_size(), layer_B.voxel_size(), 1e-8);
-  CHECK_EQ(layer_A.voxels_per_side(), layer_B.voxels_per_side());
+  // CHECK_NEAR(layer_A.voxel_size(), layer_B.voxel_size(), 1e-8);
+  // CHECK_EQ(layer_A.voxels_per_side(), layer_B.voxels_per_side());
 
   // Check if world TSDF layer agrees with merged object at all object poses.
 
@@ -296,7 +296,7 @@ void evaluateLayerRmseAtPoses(
     std::vector<std::pair<typename voxblox::Layer<VoxelType>::Ptr,
                           typename voxblox::Layer<VoxelType>::Ptr>>*
         aligned_layers_and_error_layers = nullptr) {
-  CHECK_NOTNULL(voxel_evaluation_details_vector);
+  // CHECK_NOTNULL(voxel_evaluation_details_vector);
   std::vector<Transformation> kindr_transforms_A_B;
   for (const Eigen::Matrix<float, 4, 4>& transform_A_B : transforms_A_B) {
     kindr_transforms_A_B.emplace_back(transform_A_B);

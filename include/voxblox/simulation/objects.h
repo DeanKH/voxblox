@@ -213,7 +213,7 @@ class PlaneObject : public Object {
       : Object(center, Type::kPlane), normal_(normal) {}
   PlaneObject(const Point& center, const Point& normal, const Color& color)
       : Object(center, Type::kPlane, color), normal_(normal) {
-    CHECK_NEAR(normal.norm(), 1.0, 1e-3);
+    // CHECK_NEAR(normal.norm(), 1.0, 1e-3);
   }
 
   virtual FloatingPoint getDistanceToPoint(const Point& point) const {

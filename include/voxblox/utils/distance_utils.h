@@ -19,7 +19,7 @@ bool getSurfaceDistanceAlongRay(const Layer<VoxelType>& layer,
                                 const Point& bearing_vector,
                                 FloatingPoint max_distance,
                                 Point* triangulated_pose) {
-  CHECK_NOTNULL(triangulated_pose);
+  // CHECK_NOTNULL(triangulated_pose);
   // Make sure bearing vector is normalized.
   const Point ray_direction = bearing_vector.normalized();
 

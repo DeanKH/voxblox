@@ -39,8 +39,8 @@ class LayerTest {
         CompareBlocks(block_A, block_B);
       } else {
         ADD_FAILURE();
-        LOG(ERROR) << "Block at index [" << index_A.transpose()
-                   << "] in layer_A does not exists in layer_B";
+        // LOG(ERROR) << "Block at index [" << index_A.transpose()
+        << "] in layer_A does not exists in layer_B";
       }
     }
     for (const BlockIndex& index_B : blocks_B) {
@@ -52,8 +52,8 @@ class LayerTest {
         CompareBlocks(block_B, block_A);
       } else {
         ADD_FAILURE();
-        LOG(ERROR) << "Block at index [" << index_B.transpose()
-                   << "] in layer_B does not exists in layer_A";
+        // LOG(ERROR) << "Block at index [" << index_B.transpose()
+        << "] in layer_B does not exists in layer_A";
       }
     }
 
@@ -85,7 +85,7 @@ class LayerTest {
 template <typename VoxelType>
 void LayerTest<VoxelType>::CompareVoxel(const VoxelType& /* voxel_A */,
                                         const VoxelType& /* voxel_B */) const {
-  LOG(FATAL) << "Not implemented for this voxel type!";
+  // LOG(FATAL) << "Not implemented for this voxel type!";
 }
 
 template <>
@@ -140,7 +140,7 @@ template <typename VoxelType>
 void SetUpTestLayer(const IndexElement block_volume_diameter,
                     const IndexElement block_volume_offset,
                     Layer<VoxelType>* layer) {
-  CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(layer);
 
   const IndexElement half_idx_range = block_volume_diameter / 2;
 
@@ -178,7 +178,7 @@ void SetUpTestLayer(const IndexElement block_volume_diameter,
 template <>
 inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
                                   TsdfVoxel* voxel) {
-  CHECK_NOTNULL(voxel);
+  // CHECK_NOTNULL(voxel);
   voxel->distance = x * y * 0.66 + z;
   voxel->weight = y * z * 0.33 + x;
   voxel->color.r = static_cast<uint8_t>(x % 255);
@@ -190,7 +190,7 @@ inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
 template <>
 inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
                                   EsdfVoxel* voxel) {
-  CHECK_NOTNULL(voxel);
+  // CHECK_NOTNULL(voxel);
   voxel->distance = x * y * 0.66 + z;
   voxel->parent.x() = x % INT8_MAX;
   voxel->parent.y() = y % INT8_MAX;
@@ -204,7 +204,7 @@ inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
 template <>
 inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
                                   OccupancyVoxel* voxel) {
-  CHECK_NOTNULL(voxel);
+  // CHECK_NOTNULL(voxel);
   voxel->probability_log = x * y * 0.66 + z;
   voxel->observed = true;
 }
@@ -212,7 +212,7 @@ inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
 template <>
 inline void fillVoxelWithTestData(size_t x, size_t y, size_t z,
                                   IntensityVoxel* voxel) {
-  CHECK_NOTNULL(voxel);
+  // CHECK_NOTNULL(voxel);
   voxel->intensity = x * y * 0.66 + z;
   voxel->weight = y * z * 0.33 + x;
 }

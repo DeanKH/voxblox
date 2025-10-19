@@ -24,7 +24,7 @@
 #include <sstream>
 #include <string>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/utils/timing.h"
 
@@ -160,7 +160,7 @@ double Timing::GetMaxSeconds(std::string const& tag) {
 double Timing::GetHz(size_t handle) {
   std::lock_guard<std::mutex> lock(Instance().mutex_);
   const double rolling_mean = Instance().timers_[handle].acc_.RollingMean();
-  CHECK_GT(rolling_mean, 0.0);
+  // CHECK_GT(rolling_mean, 0.0);
   return 1.0 / rolling_mean;
 }
 

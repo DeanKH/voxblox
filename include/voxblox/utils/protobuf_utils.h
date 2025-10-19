@@ -4,7 +4,7 @@
 #include <fstream>
 #include <istream>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <google/protobuf/message.h>
 #include <google/protobuf/message_lite.h>
 

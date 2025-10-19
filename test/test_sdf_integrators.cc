@@ -76,8 +76,8 @@ class SdfIntegratorsTest : public ::testing::TestWithParam<FloatingPoint> {
     truncation_distance_ = 4 * voxel_size_;
     esdf_max_distance_ = 4.0f;
 
-    LOG(INFO) << "Truncation distance: " << truncation_distance_
-              << " ESDF max distance: " << esdf_max_distance_;
+    // LOG(INFO) << "Truncation distance: " << truncation_distance_
+    << " ESDF max distance: " << esdf_max_distance_;
 
     world_.generateSdfFromWorld(truncation_distance_, tsdf_gt_.get());
     world_.generateSdfFromWorld(esdf_max_distance_, esdf_gt_.get());

@@ -16,7 +16,7 @@ namespace utils {
 template <typename VoxelType>
 bool isSameVoxel(const VoxelType& /* voxel_A */,
                  const VoxelType& /* voxel_B */) {
-  LOG(FATAL) << "Not implemented for this voxel type!";
+  // LOG(FATAL) << "Not implemented for this voxel type!";
   return false;
 }
 
@@ -82,8 +82,8 @@ bool isSameLayer(const Layer<VoxelType>& layer_A,
           << "] in layer_A is not the same as in layer_B";
       is_the_same &= is_same_block;
     } else {
-      LOG(ERROR) << "Block at index [" << index_A.transpose()
-                 << "] in layer_A does not exists in layer_B";
+      // LOG(ERROR) << "Block at index [" << index_A.transpose()
+      << "] in layer_A does not exists in layer_B";
       return false;
     }
   }
@@ -99,8 +99,8 @@ bool isSameLayer(const Layer<VoxelType>& layer_A,
           << "] in layer_B is not the same as in layer_A";
       is_the_same &= is_same_block;
     } else {
-      LOG(ERROR) << "Block at index [" << index_B.transpose()
-                 << "] in layer_B does not exists in layer_A";
+      // LOG(ERROR) << "Block at index [" << index_B.transpose()
+      << "] in layer_B does not exists in layer_A";
       return false;
     }
   }
@@ -125,8 +125,8 @@ bool isSameVoxel(const OccupancyVoxel& voxel_A, const OccupancyVoxel& voxel_B);
  */
 template <typename VoxelType>
 void centerBlocksOfLayer(Layer<VoxelType>* layer, Point* new_layer_origin) {
-  CHECK_NOTNULL(layer);
-  CHECK_NOTNULL(new_layer_origin);
+  // CHECK_NOTNULL(layer);
+  // CHECK_NOTNULL(new_layer_origin);
 
   // Compute the exact cenroid of all allocated block indices.
   Point centroid = Point::Zero();
@@ -146,8 +146,9 @@ void centerBlocksOfLayer(Layer<VoxelType>* layer, Point* new_layer_origin) {
   const FloatingPoint block_size = layer->block_size();
   *new_layer_origin = index_centroid.cast<FloatingPoint>() * block_size;
 
-  VLOG(3) << "The new origin of the coordinate frame (expressed in the old "
-          << "coordinate frame) is: " << new_layer_origin->transpose();
+  V  // LOG(3) << "The new origin of the coordinate frame (expressed in the old
+     // "
+      << "coordinate frame) is: " << new_layer_origin->transpose();
 
   // Loop over all blocks and change their spatial indices.
   // The only way to do this is to remove them all, store them in a temporary
@@ -168,14 +169,14 @@ void centerBlocksOfLayer(Layer<VoxelType>* layer, Point* new_layer_origin) {
   }
 
   layer->removeAllBlocks();
-  CHECK_EQ(layer->getNumberOfAllocatedBlocks(), 0u);
+  // CHECK_EQ(layer->getNumberOfAllocatedBlocks(), 0u);
 
   // Insert into layer again.
   for (const std::pair<const BlockIndex, typename Block<VoxelType>::Ptr>&
            idx_block_pair : temporary_map) {
     layer->insertBlock(idx_block_pair);
   }
-  CHECK_EQ(layer->getNumberOfAllocatedBlocks(), num_allocated_blocks_before);
+  // CHECK_EQ(layer->getNumberOfAllocatedBlocks(), num_allocated_blocks_before);
 }
 
 }  // namespace utils

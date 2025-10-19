@@ -4,7 +4,7 @@
 #include <fstream>  // NOLINT
 #include <string>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 
@@ -38,15 +38,15 @@ class PlyWriter {
   bool writeHeader() {
     if (!file_) {
       // Output a warning -- couldn't open file?
-      LOG(WARNING) << "Could not open file for PLY output.";
+      // LOG(WARNING) << "Could not open file for PLY output.";
       return false;
     }
     if (!parameters_set_) {
-      LOG(WARNING) << "Could not write header out -- parameters not set.";
+      // LOG(WARNING) << "Could not write header out -- parameters not set.";
       return false;
     }
     if (header_written_) {
-      LOG(WARNING) << "Header already written.";
+      // LOG(WARNING) << "Header already written.";
       return false;
     }
 

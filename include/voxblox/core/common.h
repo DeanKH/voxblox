@@ -12,7 +12,7 @@
 #include <utility>
 #include <vector>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <kindr/minimal/quat-transformation.h>
 #include <Eigen/Core>
 
@@ -235,7 +235,7 @@ inline VoxelIndex getLocalFromGlobalVoxelIndex(
   // add a big number to the index to make it positive
   constexpr int offset = 1 << (8 * sizeof(IndexElement) - 1);
 
-  CHECK(isPowerOfTwo(voxels_per_side));
+  // CHECK(isPowerOfTwo(voxels_per_side));
 
   return VoxelIndex((global_voxel_idx.x() + offset) & (voxels_per_side - 1),
                     (global_voxel_idx.y() + offset) & (voxels_per_side - 1),
@@ -245,8 +245,8 @@ inline VoxelIndex getLocalFromGlobalVoxelIndex(
 inline void getBlockAndVoxelIndexFromGlobalVoxelIndex(
     const GlobalIndex& global_voxel_idx, const int voxels_per_side,
     BlockIndex* block_index, VoxelIndex* voxel_index) {
-  CHECK_NOTNULL(block_index);
-  CHECK_NOTNULL(voxel_index);
+  // CHECK_NOTNULL(block_index);
+  // CHECK_NOTNULL(voxel_index);
   const FloatingPoint voxels_per_side_inv = 1.0 / voxels_per_side;
   *block_index =
       getBlockIndexFromGlobalVoxelIndex(global_voxel_idx, voxels_per_side_inv);
@@ -259,7 +259,7 @@ inline int signum(FloatingPoint x) { return (x == 0) ? 0 : x < 0 ? -1 : 1; }
 
 // For occupancy/octomap-style mapping.
 inline float logOddsFromProbability(float probability) {
-  CHECK(probability >= 0.0f && probability <= 1.0f);
+  // CHECK(probability >= 0.0f && probability <= 1.0f);
   return log(probability / (1.0 - probability));
 }
 

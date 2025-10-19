@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 #include "voxblox/core/layer.h"

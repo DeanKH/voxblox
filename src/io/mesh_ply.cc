@@ -27,7 +27,7 @@ namespace voxblox {
 bool convertMeshLayerToMesh(const MeshLayer& mesh_layer, Mesh* mesh,
                             const bool connected_mesh,
                             const FloatingPoint vertex_proximity_threshold) {
-  CHECK_NOTNULL(mesh);
+  // CHECK_NOTNULL(mesh);
 
   if (connected_mesh) {
     mesh_layer.getConnectedMesh(mesh, vertex_proximity_threshold);
@@ -54,7 +54,7 @@ bool outputMeshLayerAsPly(const std::string& filename,
 
   bool success = outputMeshAsPly(filename, combined_mesh);
   if (!success) {
-    LOG(WARNING) << "Saving to PLY failed!";
+    // LOG(WARNING) << "Saving to PLY failed!";
   }
   return success;
 }

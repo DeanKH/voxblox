@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 #include "voxblox/core/layer.h"
@@ -55,7 +55,7 @@ class TsdfMap {
                                " in TsdfMap constructor");
     }
 
-    CHECK(layer);
+    // CHECK(layer);
     block_size_ = layer->block_size();
   }
 

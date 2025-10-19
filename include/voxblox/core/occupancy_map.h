@@ -4,7 +4,7 @@
 #include <memory>
 #include <utility>
 
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 #include "voxblox/core/common.h"
 #include "voxblox/core/layer.h"
@@ -39,7 +39,7 @@ class OccupancyMap {
   // Creates a new OccupancyMap that contains this layer.
   explicit OccupancyMap(Layer<OccupancyVoxel>::Ptr layer)
       : occupancy_layer_(layer) {
-    CHECK(layer);
+    // CHECK(layer);
     block_size_ = layer->block_size();
   }
 

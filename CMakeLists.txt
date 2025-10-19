@@ -19,6 +19,9 @@ endif()
 set(PROTO_DEFNS proto/voxblox/Block.proto proto/voxblox/Layer.proto)
 set(BASE_PATH "proto")
 
+protobuf_generate(OUT_VAR voxblox_proto_sources LANGUAGE cpp PROTOS
+                  ${PROTO_DEFNS})
+
 set("voxblox_SRCS"
     src/alignment/icp.cc
     src/core/block.cc
@@ -40,15 +43,14 @@ set("voxblox_SRCS"
     src/utils/neighbor_tools.cc
     src/utils/protobuf_utils.cc
     src/utils/timing.cc
-    src/utils/voxel_utils.cc)
+    src/utils/voxel_utils.cc
+    ${voxblox_proto_sources})
 
 add_library(${PROJECT_NAME} SHARED ${voxblox_SRCS})
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
          $<INSTALL_INTERFACE:include> ${Protobuf_INCLUDE_DIRS}
-         ${EIGEN3_INCLUDE_DIRS})
+         ${EIGEN3_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR}/proto)
 
 # target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_proto)
-
-protobuf_generate(TARGET ${PROJECT_NAME} LANGUAGE cpp PROTOS ${PROTO_DEFNS})

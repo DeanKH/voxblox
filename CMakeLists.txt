@@ -19,8 +19,20 @@ endif()
 set(PROTO_DEFNS proto/voxblox/Block.proto proto/voxblox/Layer.proto)
 set(BASE_PATH "proto")
 
-protobuf_generate(OUT_VAR voxblox_proto_sources LANGUAGE cpp PROTOS
+protobuf_generate(OUT_VAR voxblox_proto_files LANGUAGE cpp PROTOS
                   ${PROTO_DEFNS})
+
+set(voxblox_proto_headers "")
+set(voxblox_proto_cc_sources "")
+
+foreach(proto_file ${voxblox_proto_files})
+  get_filename_component(file_ext ${proto_file} EXT)
+  if(file_ext STREQUAL ".pb.h")
+    list(APPEND voxblox_proto_headers ${proto_file})
+  elseif(file_ext STREQUAL ".pb.cc")
+    list(APPEND voxblox_proto_cc_sources ${proto_file})
+  endif()
+endforeach()
 
 set("voxblox_SRCS"
     src/alignment/icp.cc
@@ -44,13 +56,68 @@ set("voxblox_SRCS"
     src/utils/protobuf_utils.cc
     src/utils/timing.cc
     src/utils/voxel_utils.cc
-    ${voxblox_proto_sources})
+    ${voxblox_proto_cc_sources})
 
 add_library(${PROJECT_NAME} SHARED ${voxblox_SRCS})
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
          $<INSTALL_INTERFACE:include> ${Protobuf_INCLUDE_DIRS}
-         ${EIGEN3_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
+         ${EIGEN3_INCLUDE_DIRS} $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
-# target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_proto)
+add_library(voxblox::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# Link required libraries
+target_link_libraries(${PROJECT_NAME} PUBLIC ${Protobuf_LIBRARIES}
+                                             Eigen3::Eigen)
+
+# Set target properties
+set_target_properties(
+  ${PROJECT_NAME}
+  PROPERTIES VERSION 1.0.0
+             SOVERSION 1
+             EXPORT_NAME ${PROJECT_NAME})
+
+# ##############################################################################
+# INSTALLATION #
+# ##############################################################################
+include(CMakePackageConfigHelpers)
+
+# # Install the library
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT voxbloxTargets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# # Install headers
+install(
+  DIRECTORY include/
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  FILES_MATCHING
+  PATTERN "*.h"
+  PATTERN "*.hpp")
+
+# # Install generated protobuf headers
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/proto/voxblox/Block.pb.h
+              ${CMAKE_CURRENT_BINARY_DIR}/proto/voxblox/Layer.pb.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/proto/voxblox)
+
+# Create package config file
+configure_package_config_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/voxbloxConfig.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfig.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)
+
+# # Install package config files
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)
+
+# Export targets
+install(
+  EXPORT voxbloxTargets
+  FILE voxbloxTargets.cmake
+  NAMESPACE voxblox::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)

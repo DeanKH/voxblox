@@ -34,7 +34,7 @@ foreach(proto_file ${voxblox_proto_files})
   endif()
 endforeach()
 
-set("voxblox_SRCS"
+set(voxblox_SRCS
     src/alignment/icp.cc
     src/core/block.cc
     src/core/esdf_map.cc
@@ -83,7 +83,7 @@ set_target_properties(
 # ##############################################################################
 include(CMakePackageConfigHelpers)
 
-# # Install the library
+# Install the library
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT voxbloxTargets
@@ -91,33 +91,32 @@ install(
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-# # Install headers
+# Install headers
 install(
   DIRECTORY include/
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  DESTINATION include
   FILES_MATCHING
   PATTERN "*.h"
   PATTERN "*.hpp")
 
-# # Install generated protobuf headers
+# Install generated protobuf headers
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/proto/voxblox/Block.pb.h
               ${CMAKE_CURRENT_BINARY_DIR}/proto/voxblox/Layer.pb.h
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/proto/voxblox)
+        DESTINATION include/proto/voxblox)
 
 # Create package config file
 configure_package_config_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/voxbloxConfig.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfig.cmake
-  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)
+  INSTALL_DESTINATION lib/cmake/voxblox)
 
-# # Install package config files
+# Install package config files
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfig.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/voxbloxConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)
+        DESTINATION lib/cmake/voxblox)
 
 # Export targets
 install(
   EXPORT voxbloxTargets
   FILE voxbloxTargets.cmake
   NAMESPACE voxblox::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/voxblox)
+  DESTINATION lib/cmake/voxblox)
